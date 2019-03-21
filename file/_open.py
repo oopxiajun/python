@@ -13,6 +13,6 @@ while True:
 
     writeContent = input("请输入添加内容：")
 
-    myfile.write(writeContent)
+    myfile.write(writeContent+"\r\n")
 
     myfile.close()
