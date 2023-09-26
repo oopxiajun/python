@@ -1,3 +1,4 @@
+#pip3 install PyMySQL #安装 
 #!/usr/bin/python3
  
 import pymysql
