@@ -1,0 +1,1168 @@
+{
+    "id": "0b2940f7-71a9-4422-9e11-a3ec6e1fdccc",
+    "object": "chat.completion",
+    "created": 1749453283,
+    "model": "deepseek-chat",
+    "choices": [
+        {
+            "index": 0,
+            "message": {
+                "role": "assistant",
+                "content": "```json\n{\n    \"self_repairable\": false,\n    \"repair_steps\": [],\n    \"recommended_services\": [\n        \"检查并更换符合手册要求的0W-20机油\",\n        \"检查机油压力传感器是否故障，必要时更换\",\n        \"检查机油泵的工作状态，特别是在冷启动时\",\n        \"检查油路是否存在局部堵塞，必要时进行清洗\"\n    ]\n}\n```"
+            },
+            "logprobs": null,
+            "finish_reason": "stop"
+        }
+    ],
+    "usage": {
+        "prompt_tokens": 309,
+        "completion_tokens": 86,
+        "total_tokens": 395,
+        "prompt_tokens_details": {
+            "cached_tokens": 0
+        },
+        "prompt_cache_hit_tokens": 0,
+        "prompt_cache_miss_tokens": 309
+    },
+    "system_fingerprint": "fp_8802369eaa_prod0425fp8"
+}############################################################
+{
+    "messages": [
+        {
+            "role": "user",
+            "content": "\n    您是一名专业的汽车维修技师，正在帮助车主诊断车辆问题。请根据以下信息进行诊断：\n    \n    车辆信息：{\"brand\": \"Toyota\", \"model\": \"Camry\", \"year\": 2020, \"mileage\": 45000, \"last_service\": \"2023-12-15\", \"insurance_expiry\": \"2024-09-30\", \"next_maintenance\": \"2024-06-30\"}\n    用户描述的症状：仪表盘机油灯闪烁\n    \n    请根据您的专业知识：\n    1. 分析可能的故障原因\n    2. 生成最多3个关键问题来进一步明确问题\n    3. 对于异响类问题，请建议用户试听哪种声音样本\n    \n    输出格式：\n    {\n        \"analysis\": \"对问题的初步分析\",\n        \"questions\": [\"问题1\", \"问题2\", \"问题3\"],\n        \"sound_suggestion\": \"建议试听的声音类型\"\n    }\n    "
+        }
+    ],
+    "model": "deepseek-chat",
+    "temperature": 0.3,
+    "max_tokens": 1500
+}{
+    "id": "50cc7868-27f3-49d5-88a6-6b80590043a9",
+    "object": "chat.completion",
+    "created": 1749454336,
+    "model": "deepseek-chat",
+    "choices": [
+        {
+            "index": 0,
+            "message": {
+                "role": "assistant",
+                "content": "```json\n{\n    \"analysis\": \"仪表盘机油灯闪烁可能由以下原因引起：1) 机油油位过低；2) 机油压力不足（可能因机油泵故障、油路堵塞或传感器问题）；3) 机油质量下降或型号不符；4) 电气故障（如传感器线路短路或仪表盘故障）。由于车辆刚完成保养不久（2023-12-15），需优先排查是否因保养操作不当导致机油泄漏或未正确复位保养提示。\",\n    \"questions\": [\n        \"机油灯闪烁是持续出现还是间歇性？是否伴随发动机异响或动力下降？\",\n        \"最近一次保养后是否检查过机油尺，油位是否在正常范围内？\",\n        \"保养时使用的机油型号是否符合车辆手册要求（如0W-20）？\"\n    ],\n    \"sound_suggestion\": \"若用户报告发动机异响，建议试听：1) 金属摩擦声（可能因机油不足导致部件润滑不良）；2) 低沉敲击声（可能因油压不足导致液压挺杆异常）。\"\n}\n```"
+            },
+            "logprobs": null,
+            "finish_reason": "stop"
+        }
+    ],
+    "usage": {
+        "prompt_tokens": 206,
+        "completion_tokens": 231,
+        "total_tokens": 437,
+        "prompt_tokens_details": {
+            "cached_tokens": 192
+        },
+        "prompt_cache_hit_tokens": 192,
+        "prompt_cache_miss_tokens": 14
+    },
+    "system_fingerprint": "fp_8802369eaa_prod0425fp8"
+}############################################################
+{
+    "messages": [
+        {
+            "role": "user",
+            "content": "\n    基于以下诊断信息：\n    {\n    \"analysis\": \"仪表盘机油灯闪烁可能由以下原因引起：1) 机油油位过低；2) 机油压力不足（可能因机油泵故障、油路堵塞或传感器问题）；3) 机油质量下降或型号不符；4) 电气故障（如传感器线路短路或仪表盘故障）。由于车辆刚完成保养不久（2023-12-15），需优先排查是否因保养操作不当导致机油泄漏或未正确复位保养提示。\",\n    \"questions\": [\n        \"机油灯闪烁是持续出现还是间歇性？是否伴随发动机异响或动力下降？\",\n        \"最近一次保养后是否检查过机油尺，油位是否在正常范围内？\",\n        \"保养时使用的机油型号是否符合车辆手册要求（如0W-20）？\"\n    ],\n    \"sound_suggestion\": \"若用户报告发动机异响，建议试听：1) 金属摩擦声（可能因机油不足导致部件润滑不良）；2) 低沉敲击声（可能因油压不足导致液压挺杆异常）。\"\n}\n    \n    请判断：\n    1. 车主是否能够自行修复问题？（是/否）\n    2. 如果可自行修复，提供详细的步骤指导\n    3. 如果需要专业维修，推荐维修项目\n    \n    输出格式：\n    {\n        \"self_repairable\": true/false,\n        \"repair_steps\": [\"步骤1\", \"步骤2\", ...],\n        \"recommended_services\": [\"服务1\", \"服务2\", ...]\n    }\n    "
+        }
+    ],
+    "model": "deepseek-chat",
+    "temperature": 0.3,
+    "max_tokens": 1500
+}{
+    "id": "f393f3f6-1817-4d85-b491-f8f5cc92769f",
+    "object": "chat.completion",
+    "created": 1749454351,
+    "model": "deepseek-chat",
+    "choices": [
+        {
+            "index": 0,
+            "message": {
+                "role": "assistant",
+                "content": "```json\n{\n    \"self_repairable\": false,\n    \"repair_steps\": [\n        \"检查机油尺，确认机油油位是否在正常范围内\",\n        \"如果油位过低，添加符合车辆手册要求的机油型号（如0W-20）\",\n        \"检查是否有明显的机油泄漏痕迹\",\n        \"尝试复位保养提示（参考车辆手册操作）\"\n    ],\n    \"recommended_services\": [\n        \"机油压力测试（排查机油泵或油路问题）\",\n        \"机油传感器及线路检测\",\n        \"全面检查保养操作是否规范（如机油滤清器安装是否到位）\",\n        \"仪表盘故障诊断（若排除机油问题后灯仍闪烁）\"\n    ]\n}\n``` \n\n**说明：**  \n1. **可自行尝试的步骤**仅适用于简单排查（如油位检查/添加机油），但若机油灯持续闪烁或伴随异响，说明可能存在机械或电气故障，需专业设备检测。  \n2. **推荐维修项目**优先考虑与近期保养相关的潜在失误（如油压问题），同时覆盖传感器和仪表等可能性。"
+            },
+            "logprobs": null,
+            "finish_reason": "stop"
+        }
+    ],
+    "usage": {
+        "prompt_tokens": 339,
+        "completion_tokens": 235,
+        "total_tokens": 574,
+        "prompt_tokens_details": {
+            "cached_tokens": 64
+        },
+        "prompt_cache_hit_tokens": 64,
+        "prompt_cache_miss_tokens": 275
+    },
+    "system_fingerprint": "fp_8802369eaa_prod0425fp8"
+}############################################################
+{
+    "messages": [
+        {
+            "role": "user",
+            "content": "\n    您是一名专业的汽车维修技师，正在帮助车主诊断车辆问题。请根据以下信息进行诊断：\n    \n    车辆信息：{\"brand\": \"Toyota\", \"model\": \"Camry\", \"year\": 2020, \"mileage\": 45000, \"last_service\": \"2023-12-15\", \"insurance_expiry\": \"2024-09-30\", \"next_maintenance\": \"2024-06-30\"}\n    用户描述的症状：仪表盘机油灯闪烁\n    \n    请根据您的专业知识：\n    1. 分析可能的故障原因\n    2. 生成最多3个关键问题来进一步明确问题\n    3. 对于异响类问题，请建议用户试听哪种声音样本\n    \n    输出格式：\n    {\n        \"analysis\": \"对问题的初步分析\",\n        \"questions\": [\"问题1\", \"问题2\", \"问题3\"],\n        \"sound_suggestion\": \"建议试听的声音类型\"\n    }\n    "
+        }
+    ],
+    "model": "deepseek-chat",
+    "temperature": 0.3,
+    "max_tokens": 1500
+}{
+    "id": "18d9bed1-bc74-4afa-a8c3-bbd230cf2c0c",
+    "object": "chat.completion",
+    "created": 1749454378,
+    "model": "deepseek-chat",
+    "choices": [
+        {
+            "index": 0,
+            "message": {
+                "role": "assistant",
+                "content": "```json\n{\n    \"analysis\": \"仪表盘机油灯闪烁可能由以下原因引起：1) 机油油位过低；2) 机油压力不足（可能因机油泵故障、油路堵塞或传感器问题）；3) 机油质量下降或型号不符；4) 电气系统故障（如传感器误报或线路问题）。由于车辆刚在2023年12月进行过保养，需重点检查是否漏油或保养时机油未加注到位。\",\n    \"questions\": [\n        \"机油灯是持续闪烁还是仅在特定工况（如急加速/转弯）下出现？\",\n        \"最近是否观察到地面有油渍或机油消耗异常？\",\n        \"保养时使用的机油型号是否符合手册要求的0W-20标号？\"\n    ],\n    \"sound_suggestion\": \"若伴随异响，建议试听：1) 机油泵嗡嗡声（低压导致气蚀声）；2) 发动机顶部哒哒声（液压挺杆缺油）；3) 金属干摩擦声（严重润滑不足）。\"\n}\n```"
+            },
+            "logprobs": null,
+            "finish_reason": "stop"
+        }
+    ],
+    "usage": {
+        "prompt_tokens": 206,
+        "completion_tokens": 224,
+        "total_tokens": 430,
+        "prompt_tokens_details": {
+            "cached_tokens": 192
+        },
+        "prompt_cache_hit_tokens": 192,
+        "prompt_cache_miss_tokens": 14
+    },
+    "system_fingerprint": "fp_8802369eaa_prod0425fp8"
+}############################################################
+{
+    "messages": [
+        {
+            "role": "user",
+            "content": "\n    基于以下诊断信息：\n    {\n    \"analysis\": \"仪表盘机油灯闪烁可能由以下原因引起：1) 机油油位过低；2) 机油压力不足（可能因机油泵故障、油路堵塞或传感器问题）；3) 机油质量下降或型号不符；4) 电气系统故障（如传感器误报或线路问题）。由于车辆刚在2023年12月进行过保养，需重点检查是否漏油或保养时机油未加注到位。\",\n    \"questions\": [\n        \"机油灯是持续闪烁还是仅在特定工况（如急加速/转弯）下出现？\",\n        \"最近是否观察到地面有油渍或机油消耗异常？\",\n        \"保养时使用的机油型号是否符合手册要求的0W-20标号？\"\n    ],\n    \"sound_suggestion\": \"若伴随异响，建议试听：1) 机油泵嗡嗡声（低压导致气蚀声）；2) 发动机顶部哒哒声（液压挺杆缺油）；3) 金属干摩擦声（严重润滑不足）。\"\n}\n    \n    请判断：\n    1. 车主是否能够自行修复问题？（是/否）\n    2. 如果可自行修复，提供详细的步骤指导\n    3. 如果需要专业维修，推荐维修项目\n    \n    输出格式：\n    {\n        \"self_repairable\": true/false,\n        \"repair_steps\": [\"步骤1\", \"步骤2\", ...],\n        \"recommended_services\": [\"服务1\", \"服务2\", ...]\n    }\n    "
+        }
+    ],
+    "model": "deepseek-chat",
+    "temperature": 0.3,
+    "max_tokens": 1500
+}{
+    "id": "a003ccf0-176b-408d-8cfd-b865f9421195",
+    "object": "chat.completion",
+    "created": 1749454394,
+    "model": "deepseek-chat",
+    "choices": [
+        {
+            "index": 0,
+            "message": {
+                "role": "assistant",
+                "content": "```json\n{\n    \"self_repairable\": false,\n    \"repair_steps\": [\n        \"检查机油油位：在车辆熄火并水平停放10分钟后，拔出机油尺擦拭干净后重新插入，再拔出检查油位是否在MIN-MAX刻度之间。若低于MIN，可尝试添加符合手册要求的0W-20机油至标准刻度。\",\n        \"目视检查发动机舱和地面：观察是否有明显油渍或泄漏痕迹，特别是油底壳、机油滤清器及放油螺丝周围。\",\n        \"验证保养记录：确认最近保养使用的机油型号是否为0W-20，并检查保养单据是否包含机油更换项目。\"\n    ],\n    \"recommended_services\": [\n        \"机油压力测试（使用机械压力表验证实际油压是否达标）\",\n        \"机油泵及油路检查（需拆卸油底壳检查泵体磨损和油路堵塞情况）\",\n        \"电子诊断（用OBD设备读取故障码，重点检查机油压力传感器信号）\",\n        \"全面泄漏检测（使用荧光检漏剂或超声波检测仪定位微小泄漏点）\"\n    ]\n}\n```"
+            },
+            "logprobs": null,
+            "finish_reason": "stop"
+        }
+    ],
+    "usage": {
+        "prompt_tokens": 332,
+        "completion_tokens": 244,
+        "total_tokens": 576,
+        "prompt_tokens_details": {
+            "cached_tokens": 64
+        },
+        "prompt_cache_hit_tokens": 64,
+        "prompt_cache_miss_tokens": 268
+    },
+    "system_fingerprint": "fp_8802369eaa_prod0425fp8"
+}############################################################
+{
+    "messages": [
+        {
+            "role": "user",
+            "content": "\n    您是一名专业的汽车维修技师，正在帮助车主诊断车辆问题。请根据以下信息进行诊断：\n    \n    车辆信息：{\"brand\": \"Toyota\", \"model\": \"Camry\", \"year\": 2020, \"mileage\": 45000, \"last_service\": \"2023-12-15\", \"insurance_expiry\": \"2024-09-30\", \"next_maintenance\": \"2024-06-30\"}\n    用户描述的症状：车辆启动时，提示胎压检测故障\n\n    \n    请根据您的专业知识：\n    1. 分析可能的故障原因\n    2. 生成最多3个关键问题来进一步明确问题\n    3. 对于异响类问题，请建议用户试听哪种声音样本\n    \n    输出格式：\n    {\n        \"analysis\": \"对问题的初步分析\",\n        \"questions\": [\"问题1\", \"问题2\", \"问题3\"],\n        \"sound_suggestion\": \"建议试听的声音类型\"\n    }\n    "
+        }
+    ],
+    "model": "deepseek-chat",
+    "temperature": 0.3,
+    "max_tokens": 1500
+}{
+    "id": "13e550a3-557b-40b0-9456-1f703d119f77",
+    "object": "chat.completion",
+    "created": 1749454436,
+    "model": "deepseek-chat",
+    "choices": [
+        {
+            "index": 0,
+            "message": {
+                "role": "assistant",
+                "content": "```json\n{\n    \"analysis\": \"胎压检测系统（TPMS）故障可能由以下原因引起：1. 一个或多个轮胎的实际胎压低于/高于标准值；2. 胎压传感器电池电量耗尽（2020年车型的传感器电池寿命通常为5-7年，但极端温度或频繁信号传输可能缩短寿命）；3. 传感器损坏（如轮胎拆卸时碰撞）；4. 系统接收模块故障（较罕见）；5. 近期轮胎换位或更换后未重置系统。\",\n    \"questions\": [\n        \"故障灯是持续点亮还是闪烁？闪烁通常表示系统故障，常亮表示胎压异常\",\n        \"最近是否进行过轮胎充气、换位、更换或补胎？\",\n        \"仪表盘是否显示具体某个轮胎的胎压数值异常？\"\n    ],\n    \"sound_suggestion\": \"不适用（胎压故障通常无声响，但可建议用户注意听轮胎区域是否有‘嘀嗒’异响，这可能提示轮胎扎钉导致慢漏气）\"\n}\n```"
+            },
+            "logprobs": null,
+            "finish_reason": "stop"
+        }
+    ],
+    "usage": {
+        "prompt_tokens": 211,
+        "completion_tokens": 224,
+        "total_tokens": 435,
+        "prompt_tokens_details": {
+            "cached_tokens": 64
+        },
+        "prompt_cache_hit_tokens": 64,
+        "prompt_cache_miss_tokens": 147
+    },
+    "system_fingerprint": "fp_8802369eaa_prod0425fp8"
+}############################################################
+{
+    "messages": [
+        {
+            "role": "user",
+            "content": "\n    基于以下诊断信息：\n    {\n    \"analysis\": \"胎压检测系统（TPMS）故障可能由以下原因引起：1. 一个或多个轮胎的实际胎压低于/高于标准值；2. 胎压传感器电池电量耗尽（2020年车型的传感器电池寿命通常为5-7年，但极端温度或频繁信号传输可能缩短寿命）；3. 传感器损坏（如轮胎拆卸时碰撞）；4. 系统接收模块故障（较罕见）；5. 近期轮胎换位或更换后未重置系统。\",\n    \"questions\": [\n        \"故障灯是持续点亮还是闪烁？闪烁通常表示系统故障，常亮表示胎压异常\",\n        \"最近是否进行过轮胎充气、换位、更换或补胎？\",\n        \"仪表盘是否显示具体某个轮胎的胎压数值异常？\"\n    ],\n    \"sound_suggestion\": \"不适用（胎压故障通常无声响，但可建议用户注意听轮胎区域是否有‘嘀嗒’异响，这可能提示轮胎扎钉导致慢漏气）\"\n}\n    \n    请判断：\n    1. 车主是否能够自行修复问题？（是/否）\n    2. 如果可自行修复，提供详细的步骤指导\n    3. 如果需要专业维修，推荐维修项目\n    \n    输出格式：\n    {\n        \"self_repairable\": true/false,\n        \"repair_steps\": [\"步骤1\", \"步骤2\", ...],\n        \"recommended_services\": [\"服务1\", \"服务2\", ...]\n    }\n    "
+        }
+    ],
+    "model": "deepseek-chat",
+    "temperature": 0.3,
+    "max_tokens": 1500
+}{
+    "id": "1ab7ee61-201d-4967-b2f7-31c15a62d9a8",
+    "object": "chat.completion",
+    "created": 1749454452,
+    "model": "deepseek-chat",
+    "choices": [
+        {
+            "index": 0,
+            "message": {
+                "role": "assistant",
+                "content": "```json\n{\n    \"self_repairable\": true,\n    \"repair_steps\": [\n        \"检查故障灯状态：如果灯闪烁，可能需要专业维修；如果常亮，继续以下步骤。\",\n        \"使用胎压计测量所有轮胎的实际胎压，与车辆标准值（通常在车门框或用户手册中标注）对比。\",\n        \"如果胎压异常（过高或过低），用充气泵调整至标准值，行驶几公里后观察故障灯是否熄灭。\",\n        \"如果胎压正常但灯仍亮，尝试重置TPMS系统（方法参考用户手册，通常需在点火开关ON时按住复位按钮）。\",\n        \"检查轮胎是否有扎钉或漏气痕迹，必要时补胎。\"\n    ],\n    \"recommended_services\": [\n        \"胎压传感器电池更换（如传感器失效且车辆已使用5年以上）\",\n        \"TPMS传感器诊断与更换（如重置无效且排除胎压问题）\",\n        \"接收模块检测（极少数情况下需专业设备诊断）\",\n        \"轮胎拆装后动平衡及气密性检查（如近期更换过轮胎）\"\n    ]\n}\n```"
+            },
+            "logprobs": null,
+            "finish_reason": "stop"
+        }
+    ],
+    "usage": {
+        "prompt_tokens": 332,
+        "completion_tokens": 246,
+        "total_tokens": 578,
+        "prompt_tokens_details": {
+            "cached_tokens": 0
+        },
+        "prompt_cache_hit_tokens": 0,
+        "prompt_cache_miss_tokens": 332
+    },
+    "system_fingerprint": "fp_8802369eaa_prod0425fp8"
+}############################################################
+{
+    "messages": [
+        {
+            "role": "user",
+            "content": "\n    您是一名专业的汽车维修技师，正在帮助车主诊断车辆问题。请根据以下信息进行诊断：\n    \n    车辆信息：{\"brand\": \"Toyota\", \"model\": \"Camry\", \"year\": 2020, \"mileage\": 45000, \"last_service\": \"2023-12-15\", \"insurance_expiry\": \"2024-09-30\", \"next_maintenance\": \"2024-06-30\"}\n    用户描述的症状：车辆启动后，仪表板上有个小人背着一把宝剑的图标在闪烁，这是啥情况呢？\n    \n    请根据您的专业知识：\n    1. 分析可能的故障原因\n    2. 生成最多3个关键问题来进一步明确问题\n    3. 对于异响类问题，请建议用户试听哪种声音样本\n    \n    输出格式：\n    {\n        \"analysis\": \"对问题的初步分析\",\n        \"questions\": [\"问题1\", \"问题2\", \"问题3\"],\n        \"sound_suggestion\": \"建议试听的声音类型\"\n    }\n    "
+        }
+    ],
+    "model": "deepseek-chat",
+    "temperature": 0.3,
+    "max_tokens": 1500
+}{
+    "id": "2bd141e4-e7ab-4e74-bc97-dcd3e999ffb8",
+    "object": "chat.completion",
+    "created": 1749454861,
+    "model": "deepseek-chat",
+    "choices": [
+        {
+            "index": 0,
+            "message": {
+                "role": "assistant",
+                "content": "```json\n{\n    \"analysis\": \"根据用户描述，仪表板上出现的小人背宝剑图标实际上是安全带未系提醒的警示符号（部分车型设计为抽象图案）。可能原因包括：1. 驾驶员或乘客未系安全带；2. 安全带插扣传感器故障；3. 座椅压力传感器误判（如座椅放置重物）；4. 线路接触不良。由于车辆较新且近期做过保养，机械故障概率较低。\",\n    \"questions\": [\n        \"该图标是否在系好安全带后仍持续闪烁？\",\n        \"前排乘客座椅是否放置了物品（如包/电子产品）？\",\n        \"最近是否有液体洒落到座椅或安全带插扣处？\"\n    ],\n    \"sound_suggestion\": \"不适用（非异响类问题）\"\n}\n```"
+            },
+            "logprobs": null,
+            "finish_reason": "stop"
+        }
+    ],
+    "usage": {
+        "prompt_tokens": 223,
+        "completion_tokens": 170,
+        "total_tokens": 393,
+        "prompt_tokens_details": {
+            "cached_tokens": 64
+        },
+        "prompt_cache_hit_tokens": 64,
+        "prompt_cache_miss_tokens": 159
+    },
+    "system_fingerprint": "fp_8802369eaa_prod0425fp8"
+}############################################################
+{
+    "messages": [
+        {
+            "role": "user",
+            "content": "\n    基于以下诊断信息：\n    {\n    \"analysis\": \"根据用户描述，仪表板上出现的小人背宝剑图标实际上是安全带未系提醒的警示符号（部分车型设计为抽象图案）。可能原因包括：1. 驾驶员或乘客未系安全带；2. 安全带插扣传感器故障；3. 座椅压力传感器误判（如座椅放置重物）；4. 线路接触不良。由于车辆较新且近期做过保养，机械故障概率较低。\",\n    \"questions\": [\n        \"该图标是否在系好安全带后仍持续闪烁？\",\n        \"前排乘客座椅是否放置了物品（如包/电子产品）？\",\n        \"最近是否有液体洒落到座椅或安全带插扣处？\"\n    ],\n    \"sound_suggestion\": \"不适用（非异响类问题）\"\n}\n    \n    请判断：\n    1. 车主是否能够自行修复问题？（是/否）\n    2. 如果可自行修复，提供详细的步骤指导\n    3. 如果需要专业维修，推荐维修项目\n    \n    输出格式：\n    {\n        \"self_repairable\": true/false,\n        \"repair_steps\": [\"步骤1\", \"步骤2\", ...],\n        \"recommended_services\": [\"服务1\", \"服务2\", ...]\n    }\n    "
+        }
+    ],
+    "model": "deepseek-chat",
+    "temperature": 0.3,
+    "max_tokens": 1500
+}{
+    "id": "0dd1642c-6f9b-4961-bb5e-8108166e1917",
+    "object": "chat.completion",
+    "created": 1749454876,
+    "model": "deepseek-chat",
+    "choices": [
+        {
+            "index": 0,
+            "message": {
+                "role": "assistant",
+                "content": "```json\n{\n    \"self_repairable\": true,\n    \"repair_steps\": [\n        \"1. 检查驾驶员和前排乘客安全带是否完全系好，确认插扣完全插入锁扣\",\n        \"2. 清理前排乘客座椅上的所有物品，观察图标是否消失\",\n        \"3. 检查安全带插扣和座椅表面是否有液体残留，用干布擦拭干净\",\n        \"4. 多次插拔安全带插扣（5-10次）以排除接触不良\",\n        \"5. 重启车辆后观察图标是否仍然存在\"\n    ],\n    \"recommended_services\": [\n        \"安全带传感器电路检测（若自行排查无效）\",\n        \"座椅压力传感器校准\",\n        \"安全带插扣总成更换（若发现物理损坏）\"\n    ]\n}\n```"
+            },
+            "logprobs": null,
+            "finish_reason": "stop"
+        }
+    ],
+    "usage": {
+        "prompt_tokens": 278,
+        "completion_tokens": 171,
+        "total_tokens": 449,
+        "prompt_tokens_details": {
+            "cached_tokens": 0
+        },
+        "prompt_cache_hit_tokens": 0,
+        "prompt_cache_miss_tokens": 278
+    },
+    "system_fingerprint": "fp_8802369eaa_prod0425fp8"
+}############################################################
+{
+    "messages": [
+        {
+            "role": "user",
+            "content": "\n    您是一名专业的汽车维修技师，正在帮助车主诊断车辆问题。请根据以下信息进行诊断：\n    \n    车辆信息：{\"brand\": \"Toyota\", \"model\": \"Camry\", \"year\": 2020, \"mileage\": 45000, \"last_service\": \"2023-12-15\", \"insurance_expiry\": \"2024-09-30\", \"next_maintenance\": \"2024-06-30\"}\n    用户描述的症状：你是谁？\n    \n    请根据您的专业知识：\n    1. 分析可能的故障原因\n    2. 生成最多3个关键问题来进一步明确问题\n    3. 对于异响类问题，请建议用户试听哪种声音样本\n    \n    输出格式：\n    {\n        \"analysis\": \"对问题的初步分析\",\n        \"questions\": [\"问题1\", \"问题2\", \"问题3\"],\n        \"sound_suggestion\": \"建议试听的声音类型\"\n    }\n    "
+        }
+    ],
+    "model": "deepseek-chat",
+    "temperature": 0.3,
+    "max_tokens": 1500
+}{
+    "id": "3274cec7-fddb-44e4-8eea-57d38205d9d9",
+    "object": "chat.completion",
+    "created": 1749455007,
+    "model": "deepseek-chat",
+    "choices": [
+        {
+            "index": 0,
+            "message": {
+                "role": "assistant",
+                "content": "```json\n{\n    \"analysis\": \"用户未提供具体的车辆症状描述，仅询问身份。作为维修技师，需要明确车辆的实际问题（如异响、故障灯、性能异常等）才能进行诊断。当前信息仅能确认车辆保养记录正常且无保险过期问题。\",\n    \"questions\": [\n        \"您的车辆具体出现了什么异常现象？（例如：异响、抖动、故障灯亮等）\",\n        \"异常现象是在什么情况下发生的？（例如：冷启动时、加速时、转弯时等）\",\n        \"您最近是否进行过非正规的维修或改装？\"\n    ],\n    \"sound_suggestion\": \"若问题涉及异响，建议用户描述或试听以下声音样本：高频金属摩擦声（如刹车片）、低频轰鸣声（如轴承损坏）、皮带吱吱声（如发电机皮带老化）。\"\n}\n```"
+            },
+            "logprobs": null,
+            "finish_reason": "stop"
+        }
+    ],
+    "usage": {
+        "prompt_tokens": 203,
+        "completion_tokens": 183,
+        "total_tokens": 386,
+        "prompt_tokens_details": {
+            "cached_tokens": 64
+        },
+        "prompt_cache_hit_tokens": 64,
+        "prompt_cache_miss_tokens": 139
+    },
+    "system_fingerprint": "fp_8802369eaa_prod0425fp8"
+}############################################################
+{
+    "messages": [
+        {
+            "role": "user",
+            "content": "\n    基于以下诊断信息：\n    {\n    \"analysis\": \"用户未提供具体的车辆症状描述，仅询问身份。作为维修技师，需要明确车辆的实际问题（如异响、故障灯、性能异常等）才能进行诊断。当前信息仅能确认车辆保养记录正常且无保险过期问题。\",\n    \"questions\": [\n        \"您的车辆具体出现了什么异常现象？（例如：异响、抖动、故障灯亮等）\",\n        \"异常现象是在什么情况下发生的？（例如：冷启动时、加速时、转弯时等）\",\n        \"您最近是否进行过非正规的维修或改装？\"\n    ],\n    \"sound_suggestion\": \"若问题涉及异响，建议用户描述或试听以下声音样本：高频金属摩擦声（如刹车片）、低频轰鸣声（如轴承损坏）、皮带吱吱声（如发电机皮带老化）。\"\n}\n    \n    请判断：\n    1. 车主是否能够自行修复问题？（是/否）\n    2. 如果可自行修复，提供详细的步骤指导\n    3. 如果需要专业维修，推荐维修项目\n    \n    输出格式：\n    {\n        \"self_repairable\": true/false,\n        \"repair_steps\": [\"步骤1\", \"步骤2\", ...],\n        \"recommended_services\": [\"服务1\", \"服务2\", ...]\n    }\n    "
+        }
+    ],
+    "model": "deepseek-chat",
+    "temperature": 0.3,
+    "max_tokens": 1500
+}{
+    "id": "e7229268-63ce-4fc0-b533-2a4dce04d8ab",
+    "object": "chat.completion",
+    "created": 1749455020,
+    "model": "deepseek-chat",
+    "choices": [
+        {
+            "index": 0,
+            "message": {
+                "role": "assistant",
+                "content": "```json\n{\n    \"self_repairable\": false,\n    \"repair_steps\": [],\n    \"recommended_services\": [\n        \"全面故障诊断（需用户提供具体症状后确定）\",\n        \"基础检查（油液、轮胎、制动系统等）\",\n        \"根据症状可能涉及的服务：异响排查、电气系统检测、发动机性能检测等\"\n    ]\n}\n``` \n\n**理由：**  \n1. **不可自行修复**：当前缺乏具体症状描述，无法判断问题根源（可能是简单问题如保险丝熔断，也可能是复杂问题如发动机故障）。  \n2. **推荐服务**：需优先通过诊断确认问题，后续可能涉及：  \n   - 异响类：检查悬挂/皮带/轴承等  \n   - 故障灯类：OBD-II解码  \n   - 性能异常：燃油系统/点火系统检测  \n\n（用户补充信息后可进一步精准判断）"
+            },
+            "logprobs": null,
+            "finish_reason": "stop"
+        }
+    ],
+    "usage": {
+        "prompt_tokens": 291,
+        "completion_tokens": 195,
+        "total_tokens": 486,
+        "prompt_tokens_details": {
+            "cached_tokens": 0
+        },
+        "prompt_cache_hit_tokens": 0,
+        "prompt_cache_miss_tokens": 291
+    },
+    "system_fingerprint": "fp_8802369eaa_prod0425fp8"
+}############################################################
+{
+    "messages": [
+        {
+            "role": "user",
+            "content": "\n    您是一名专业的汽车维修技师，正在帮助车主诊断车辆问题。请根据以下信息进行诊断：\n    \n    车辆信息：{\"brand\": \"Toyota\", \"model\": \"Camry\", \"year\": 2020, \"mileage\": 45000, \"last_service\": \"2023-12-15\", \"insurance_expiry\": \"2024-09-30\", \"next_maintenance\": \"2024-06-30\"}\n    用户描述的症状：你是谁？\n    \n    请根据您的专业知识：\n    1. 分析可能的故障原因\n    2. 生成最多3个关键问题来进一步明确问题\n    3. 对于异响类问题，请建议用户试听哪种声音样本\n    \n    输出格式：\n    {\n        \"analysis\": \"对问题的初步分析\",\n        \"questions\": [\"问题1\", \"问题2\", \"问题3\"],\n        \"sound_suggestion\": \"建议试听的声音类型\"\n    }\n    "
+        }
+    ],
+    "model": "deepseek-chat",
+    "temperature": 0.3,
+    "max_tokens": 1500
+}{
+    "id": "e56c0436-d090-44b0-b7c2-8bc9f7629de0",
+    "object": "chat.completion",
+    "created": 1749455082,
+    "model": "deepseek-chat",
+    "choices": [
+        {
+            "index": 0,
+            "message": {
+                "role": "assistant",
+                "content": "```json\n{\n    \"analysis\": \"用户的问题似乎与车辆诊断无关，可能是对对话系统的功能或身份存在疑问。作为汽车维修技师，建议明确车辆的具体症状或问题以便提供专业帮助。\",\n    \"questions\": [\n        \"您的车辆目前是否出现任何异常症状（如异响、抖动、故障灯亮等）？\",\n        \"您最近是否注意到车辆性能有变化（如油耗增加、加速无力等）？\",\n        \"您提到的‘你是谁’是否与车辆某项功能（如语音系统）的异常有关？\"\n    ],\n    \"sound_suggestion\": \"若存在异响问题，建议试听：发动机舱高频啸叫、底盘金属敲击声或内饰塑料件摩擦声的样本以辅助判断。\"\n}\n```"
+            },
+            "logprobs": null,
+            "finish_reason": "stop"
+        }
+    ],
+    "usage": {
+        "prompt_tokens": 203,
+        "completion_tokens": 162,
+        "total_tokens": 365,
+        "prompt_tokens_details": {
+            "cached_tokens": 192
+        },
+        "prompt_cache_hit_tokens": 192,
+        "prompt_cache_miss_tokens": 11
+    },
+    "system_fingerprint": "fp_8802369eaa_prod0425fp8"
+}############################################################
+{
+    "messages": [
+        {
+            "role": "user",
+            "content": "\n    基于以下诊断信息：\n    {\n    \"analysis\": \"用户的问题似乎与车辆诊断无关，可能是对对话系统的功能或身份存在疑问。作为汽车维修技师，建议明确车辆的具体症状或问题以便提供专业帮助。\",\n    \"questions\": [\n        \"您的车辆目前是否出现任何异常症状（如异响、抖动、故障灯亮等）？\",\n        \"您最近是否注意到车辆性能有变化（如油耗增加、加速无力等）？\",\n        \"您提到的‘你是谁’是否与车辆某项功能（如语音系统）的异常有关？\"\n    ],\n    \"sound_suggestion\": \"若存在异响问题，建议试听：发动机舱高频啸叫、底盘金属敲击声或内饰塑料件摩擦声的样本以辅助判断。\"\n}\n    \n    请判断：\n    1. 车主是否能够自行修复问题？（是/否）\n    2. 如果可自行修复，提供详细的步骤指导\n    3. 如果需要专业维修，推荐维修项目\n    \n    输出格式：\n    {\n        \"self_repairable\": true/false,\n        \"repair_steps\": [\"步骤1\", \"步骤2\", ...],\n        \"recommended_services\": [\"服务1\", \"服务2\", ...]\n    }\n    "
+        }
+    ],
+    "model": "deepseek-chat",
+    "temperature": 0.3,
+    "max_tokens": 1500
+}{
+    "id": "2e271eeb-5379-4825-aa04-7e02a691a4ba",
+    "object": "chat.completion",
+    "created": 1749455094,
+    "model": "deepseek-chat",
+    "choices": [
+        {
+            "index": 0,
+            "message": {
+                "role": "assistant",
+                "content": "```json\n{\n    \"self_repairable\": false,\n    \"repair_steps\": [],\n    \"recommended_services\": [\n        \"车辆异常症状诊断\",\n        \"车辆性能检测\",\n        \"车载语音系统检查\"\n    ]\n}\n```"
+            },
+            "logprobs": null,
+            "finish_reason": "stop"
+        }
+    ],
+    "usage": {
+        "prompt_tokens": 270,
+        "completion_tokens": 54,
+        "total_tokens": 324,
+        "prompt_tokens_details": {
+            "cached_tokens": 0
+        },
+        "prompt_cache_hit_tokens": 0,
+        "prompt_cache_miss_tokens": 270
+    },
+    "system_fingerprint": "fp_8802369eaa_prod0425fp8"
+}############################################################
+{
+    "messages": [
+        {
+            "role": "user",
+            "content": "\n    您是一名专业的汽车维修技师，正在帮助车主诊断车辆问题。请根据以下信息进行诊断：\n    \n    车辆信息：{\"brand\": \"Toyota\", \"model\": \"Camry\", \"year\": 2020, \"mileage\": 45000, \"last_service\": \"2023-12-15\", \"insurance_expiry\": \"2024-09-30\", \"next_maintenance\": \"2024-06-30\"}\n    用户描述的症状：车辆机油故障灯闪烁。\n\n    \n    请根据您的专业知识：\n    1. 分析可能的故障原因\n    2. 生成最多3个关键问题来进一步明确问题\n    3. 对于异响类问题，请建议用户试听哪种声音样本\n    \n    输出格式：\n    {\n        \"analysis\": \"对问题的初步分析\",\n        \"questions\": [\"问题1\", \"问题2\", \"问题3\"],\n        \"sound_suggestion\": \"建议试听的声音类型\"\n    }\n    "
+        }
+    ],
+    "model": "deepseek-chat",
+    "temperature": 0.3,
+    "max_tokens": 1500
+}{
+    "id": "c1c056aa-6193-4079-9600-5841fae95f95",
+    "object": "chat.completion",
+    "created": 1749457882,
+    "model": "deepseek-chat",
+    "choices": [
+        {
+            "index": 0,
+            "message": {
+                "role": "assistant",
+                "content": "```json\n{\n    \"analysis\": \"机油故障灯闪烁可能由以下原因引起：1) 机油油位过低或机油不足；2) 机油压力传感器故障；3) 机油泵工作不良导致压力不足；4) 机油滤清器堵塞；5) 使用不合适的机油型号。由于车辆刚在2023年12月进行过保养，需重点检查机油油位及传感器状态。\",\n    \"questions\": [\n        \"最近一次更换机油时使用的机油型号是否符合厂家建议标准？\",\n        \"机油故障灯是持续亮起还是仅在特定工况（如急加速/转弯）下闪烁？\",\n        \"检查机油尺后，当前机油油位是否在MIN和MAX刻度线之间？\"\n    ],\n    \"sound_suggestion\": \"若伴随异响，建议试听：1) 气门机构因缺油导致的金属敲击声；2) 机油泵链条/齿轮的异常摩擦声；3) 低频沉闷的油压不足导致的发动机负荷声。\"\n}\n```"
+            },
+            "logprobs": null,
+            "finish_reason": "stop"
+        }
+    ],
+    "usage": {
+        "prompt_tokens": 207,
+        "completion_tokens": 220,
+        "total_tokens": 427,
+        "prompt_tokens_details": {
+            "cached_tokens": 64
+        },
+        "prompt_cache_hit_tokens": 64,
+        "prompt_cache_miss_tokens": 143
+    },
+    "system_fingerprint": "fp_8802369eaa_prod0425fp8"
+}############################################################
+{
+    "messages": [
+        {
+            "role": "user",
+            "content": "\n    基于以下诊断信息：\n    {\n    \"analysis\": \"机油故障灯闪烁可能由以下原因引起：1) 机油油位过低或机油不足；2) 机油压力传感器故障；3) 机油泵工作不良导致压力不足；4) 机油滤清器堵塞；5) 使用不合适的机油型号。由于车辆刚在2023年12月进行过保养，需重点检查机油油位及传感器状态。\",\n    \"questions\": [\n        \"最近一次更换机油时使用的机油型号是否符合厂家建议标准？\",\n        \"机油故障灯是持续亮起还是仅在特定工况（如急加速/转弯）下闪烁？\",\n        \"检查机油尺后，当前机油油位是否在MIN和MAX刻度线之间？\"\n    ],\n    \"sound_suggestion\": \"若伴随异响，建议试听：1) 气门机构因缺油导致的金属敲击声；2) 机油泵链条/齿轮的异常摩擦声；3) 低频沉闷的油压不足导致的发动机负荷声。\"\n}\n    \n    请判断：\n    1. 车主是否能够自行修复问题？（是/否）\n    2. 如果可自行修复，提供详细的步骤指导\n    3. 如果需要专业维修，推荐维修项目\n    \n    输出格式：\n    {\n        \"self_repairable\": true/false,\n        \"repair_steps\": [\"步骤1\", \"步骤2\", ...],\n        \"recommended_services\": [\"服务1\", \"服务2\", ...]\n    }\n    "
+        }
+    ],
+    "model": "deepseek-chat",
+    "temperature": 0.3,
+    "max_tokens": 1500
+}{
+    "id": "eb9492d4-3a68-4a49-9b77-31fd5f5c0623",
+    "object": "chat.completion",
+    "created": 1749457899,
+    "model": "deepseek-chat",
+    "choices": [
+        {
+            "index": 0,
+            "message": {
+                "role": "assistant",
+                "content": "```json\n{\n    \"self_repairable\": true,\n    \"repair_steps\": [\n        \"检查机油油位：确保车辆停在水平地面，熄火等待5分钟后拔出机油尺，擦拭干净后重新插入再拔出，观察油位是否在MIN和MAX刻度线之间。若低于MIN，需添加符合厂家建议标准的机油。\",\n        \"验证机油型号：核对最近一次保养使用的机油型号与车辆用户手册中的建议标准是否一致。若不一致，需更换正确型号的机油。\",\n        \"检查机油压力传感器：目测传感器线路是否松动或破损，尝试重新插拔传感器接头（需关闭发动机）。\",\n        \"观察故障灯状态：记录故障灯是持续亮起还是仅在特定工况下闪烁，以帮助进一步诊断。\",\n        \"试听异响：在安全环境下启动发动机，注意是否有金属敲击声、异常摩擦声或低频沉闷声。\"\n    ],\n    \"recommended_services\": [\n        \"若自行检查后问题仍未解决，建议进行专业机油压力测试\",\n        \"若怀疑机油泵或滤清器故障，需拆卸检查或更换部件\",\n        \"使用诊断仪读取发动机故障码以确认传感器状态\"\n    ]\n}\n``` \n\n**判断依据：**  \n1. **可自行修复**：因问题可能由基础原因（如油位低、型号错误）引起，车主可通过简单工具（机油尺、手册）完成初步排查。  \n2. **需专业维修的情况**：若自行操作后故障灯仍闪烁，或伴随异响，则涉及机油泵/滤清器等内部部件，需专业设备检测。"
+            },
+            "logprobs": null,
+            "finish_reason": "stop"
+        }
+    ],
+    "usage": {
+        "prompt_tokens": 328,
+        "completion_tokens": 345,
+        "total_tokens": 673,
+        "prompt_tokens_details": {
+            "cached_tokens": 0
+        },
+        "prompt_cache_hit_tokens": 0,
+        "prompt_cache_miss_tokens": 328
+    },
+    "system_fingerprint": "fp_8802369eaa_prod0425fp8"
+}############################################################
+{
+    "messages": [
+        {
+            "role": "user",
+            "content": "\n    您是一名专业的汽车维修技师，正在帮助车主诊断车辆问题。请根据以下信息进行诊断：\n    \n    车辆信息：{\"brand\": \"Toyota\", \"model\": \"Camry\", \"year\": 2020, \"mileage\": 45000, \"last_service\": \"2023-12-15\", \"insurance_expiry\": \"2024-09-30\", \"next_maintenance\": \"2024-06-30\"}\n    用户描述的症状：发动机故障灯闪烁，无异响\n\n    \n    请根据您的专业知识：\n    1. 分析可能的故障原因\n    2. 生成最多3个关键问题来进一步明确问题\n    3. 对于异响类问题，请建议用户试听哪种声音样本\n    \n    输出格式：\n    {\n        \"analysis\": \"对问题的初步分析\",\n        \"questions\": [\"问题1\", \"问题2\", \"问题3\"],\n        \"sound_suggestion\": \"建议试听的声音类型\"\n    }\n    "
+        }
+    ],
+    "model": "deepseek-chat",
+    "temperature": 0.3,
+    "max_tokens": 1500
+}{
+    "id": "e83b0c9e-d03c-4df6-815a-ef98e0613e97",
+    "object": "chat.completion",
+    "created": 1749457981,
+    "model": "deepseek-chat",
+    "choices": [
+        {
+            "index": 0,
+            "message": {
+                "role": "assistant",
+                "content": "```json\n{\n    \"analysis\": \"发动机故障灯闪烁通常表明存在严重的发动机管理问题，可能涉及点火系统、燃油系统或排放控制系统。对于2020年丰田凯美瑞，常见原因包括：1) 点火线圈或火花塞故障导致缺火；2) 氧传感器或三元催化器故障；3) 燃油喷射系统问题（如喷油嘴堵塞）。由于用户报告无异响，可初步排除机械部件损坏（如正时链条问题）。建议优先读取故障码以精准定位。\",\n    \"questions\": [\n        \"故障灯是持续闪烁还是间歇性闪烁？持续闪烁通常需要立即处理。\",\n        \"最近是否加注过不同标号或可疑质量的燃油？\",\n        \"车辆在故障灯闪烁时是否出现动力下降或抖动现象？\"\n    ],\n    \"sound_suggestion\": \"虽然用户报告无异响，但仍建议试听：1) 高频点火缺火的‘啪啪’声；2) 燃油泵工作的嗡嗡声；3) 排气系统泄漏的‘嘶嘶’声。这些声音可能帮助判断点火系统或燃油压力问题。\"\n}\n```"
+            },
+            "logprobs": null,
+            "finish_reason": "stop"
+        }
+    ],
+    "usage": {
+        "prompt_tokens": 209,
+        "completion_tokens": 239,
+        "total_tokens": 448,
+        "prompt_tokens_details": {
+            "cached_tokens": 64
+        },
+        "prompt_cache_hit_tokens": 64,
+        "prompt_cache_miss_tokens": 145
+    },
+    "system_fingerprint": "fp_8802369eaa_prod0425fp8"
+}############################################################
+{
+    "messages": [
+        {
+            "role": "user",
+            "content": "\n    基于以下诊断信息：\n    {\n    \"analysis\": \"发动机故障灯闪烁通常表明存在严重的发动机管理问题，可能涉及点火系统、燃油系统或排放控制系统。对于2020年丰田凯美瑞，常见原因包括：1) 点火线圈或火花塞故障导致缺火；2) 氧传感器或三元催化器故障；3) 燃油喷射系统问题（如喷油嘴堵塞）。由于用户报告无异响，可初步排除机械部件损坏（如正时链条问题）。建议优先读取故障码以精准定位。\",\n    \"questions\": [\n        \"故障灯是持续闪烁还是间歇性闪烁？持续闪烁通常需要立即处理。\",\n        \"最近是否加注过不同标号或可疑质量的燃油？\",\n        \"车辆在故障灯闪烁时是否出现动力下降或抖动现象？\"\n    ],\n    \"sound_suggestion\": \"虽然用户报告无异响，但仍建议试听：1) 高频点火缺火的‘啪啪’声；2) 燃油泵工作的嗡嗡声；3) 排气系统泄漏的‘嘶嘶’声。这些声音可能帮助判断点火系统或燃油压力问题。\"\n}\n    \n    请判断：\n    1. 车主是否能够自行修复问题？（是/否）\n    2. 如果可自行修复，提供详细的步骤指导\n    3. 如果需要专业维修，推荐维修项目\n    \n    输出格式：\n    {\n        \"self_repairable\": true/false,\n        \"repair_steps\": [\"步骤1\", \"步骤2\", ...],\n        \"recommended_services\": [\"服务1\", \"服务2\", ...]\n    }\n    "
+        }
+    ],
+    "model": "deepseek-chat",
+    "temperature": 0.3,
+    "max_tokens": 1500
+}{
+    "id": "ef7a86b7-fbbe-42d8-8b59-6b957925fc64",
+    "object": "chat.completion",
+    "created": 1749457999,
+    "model": "deepseek-chat",
+    "choices": [
+        {
+            "index": 0,
+            "message": {
+                "role": "assistant",
+                "content": "```json\n{\n    \"self_repairable\": false,\n    \"repair_steps\": [],\n    \"recommended_services\": [\n        \"使用OBD-II扫描仪读取故障码以精准定位问题\",\n        \"检查点火系统（点火线圈、火花塞）是否存在故障\",\n        \"检查氧传感器和三元催化器是否正常工作\",\n        \"检查燃油喷射系统（如喷油嘴是否堵塞）\",\n        \"检查燃油质量及燃油泵工作状态\",\n        \"检查排气系统是否存在泄漏\"\n    ]\n}\n```"
+            },
+            "logprobs": null,
+            "finish_reason": "stop"
+        }
+    ],
+    "usage": {
+        "prompt_tokens": 347,
+        "completion_tokens": 111,
+        "total_tokens": 458,
+        "prompt_tokens_details": {
+            "cached_tokens": 0
+        },
+        "prompt_cache_hit_tokens": 0,
+        "prompt_cache_miss_tokens": 347
+    },
+    "system_fingerprint": "fp_8802369eaa_prod0425fp8"
+}############################################################
+{
+    "messages": [
+        {
+            "role": "user",
+            "content": "\n    您是一名专业的汽车维修技师，正在帮助车主诊断车辆问题。请根据以下信息进行诊断：\n    \n    车辆信息：{\"brand\": \"Toyota\", \"model\": \"Camry\", \"year\": 2020, \"mileage\": 45000, \"last_service\": \"2023-12-15\", \"insurance_expiry\": \"2024-09-30\", \"next_maintenance\": \"2024-06-30\"}\n    用户描述的症状：刹车灯闪烁\n    \n    请根据您的专业知识：\n    1. 分析可能的故障原因\n    2. 生成最多3个关键问题来进一步明确问题\n    3. 对于异响类问题，请建议用户试听哪种声音样本\n    \n    输出格式：\n    {\n        \"analysis\": \"对问题的初步分析\",\n        \"questions\": [\"问题1\", \"问题2\", \"问题3\"],\n        \"sound_suggestion\": \"建议试听的声音类型\"\n    }\n    "
+        }
+    ],
+    "model": "deepseek-chat",
+    "temperature": 0.3,
+    "max_tokens": 1500
+}{
+    "id": "28eda1e7-4e0d-42f6-8a25-5cc6d030b0d3",
+    "object": "chat.completion",
+    "created": 1749458170,
+    "model": "deepseek-chat",
+    "choices": [
+        {
+            "index": 0,
+            "message": {
+                "role": "assistant",
+                "content": "```json\n{\n    \"analysis\": \"刹车灯闪烁可能由多种原因引起，包括电路问题、刹车灯开关故障、灯泡接触不良或保险丝问题。由于车辆是2020年的Toyota Camry，里程数为45000公里，且最近一次保养在2023年12月15日，电路老化或灯泡问题的可能性较低，但刹车灯开关或保险丝问题仍需排查。\",\n    \"questions\": [\n        \"刹车灯闪烁是持续性的还是间歇性的？\",\n        \"闪烁时是否伴随其他电气系统异常（如仪表盘灯光闪烁）？\",\n        \"最近是否有进行过任何电气系统的改装或维修？\"\n    ],\n    \"sound_suggestion\": \"建议试听继电器或保险丝盒附近的咔嗒声，以判断是否有继电器频繁动作或保险丝接触不良的声音。\"\n}\n```"
+            },
+            "logprobs": null,
+            "finish_reason": "stop"
+        }
+    ],
+    "usage": {
+        "prompt_tokens": 204,
+        "completion_tokens": 174,
+        "total_tokens": 378,
+        "prompt_tokens_details": {
+            "cached_tokens": 64
+        },
+        "prompt_cache_hit_tokens": 64,
+        "prompt_cache_miss_tokens": 140
+    },
+    "system_fingerprint": "fp_8802369eaa_prod0425fp8"
+}############################################################
+{
+    "messages": [
+        {
+            "role": "user",
+            "content": "\n    基于以下诊断信息：\n    {\n    \"analysis\": \"刹车灯闪烁可能由多种原因引起，包括电路问题、刹车灯开关故障、灯泡接触不良或保险丝问题。由于车辆是2020年的Toyota Camry，里程数为45000公里，且最近一次保养在2023年12月15日，电路老化或灯泡问题的可能性较低，但刹车灯开关或保险丝问题仍需排查。\",\n    \"questions\": [\n        \"刹车灯闪烁是持续性的还是间歇性的？\",\n        \"闪烁时是否伴随其他电气系统异常（如仪表盘灯光闪烁）？\",\n        \"最近是否有进行过任何电气系统的改装或维修？\"\n    ],\n    \"sound_suggestion\": \"建议试听继电器或保险丝盒附近的咔嗒声，以判断是否有继电器频繁动作或保险丝接触不良的声音。\"\n}\n    \n    请判断：\n    1. 车主是否能够自行修复问题？（是/否）\n    2. 如果可自行修复，提供详细的步骤指导\n    3. 如果需要专业维修，推荐维修项目\n    \n    输出格式：\n    {\n        \"self_repairable\": true/false,\n        \"repair_steps\": [\"步骤1\", \"步骤2\", ...],\n        \"recommended_services\": [\"服务1\", \"服务2\", ...]\n    }\n    "
+        }
+    ],
+    "model": "deepseek-chat",
+    "temperature": 0.3,
+    "max_tokens": 1500
+}{
+    "id": "23b42a0b-f0d3-4b99-820e-4a01c4584c6e",
+    "object": "chat.completion",
+    "created": 1749458182,
+    "model": "deepseek-chat",
+    "choices": [
+        {
+            "index": 0,
+            "message": {
+                "role": "assistant",
+                "content": "```json\n{\n    \"self_repairable\": true,\n    \"repair_steps\": [\n        \"检查刹车灯灯泡是否松动或接触不良，尝试重新安装或更换灯泡。\",\n        \"检查刹车灯开关是否正常工作，可以尝试轻轻拨动开关观察刹车灯反应。\",\n        \"检查相关保险丝是否熔断，如有需要更换相同规格的保险丝。\",\n        \"检查继电器是否有咔嗒声，如有异常尝试更换继电器。\",\n        \"如果以上步骤无法解决问题，建议检查车辆电路是否有短路或接触不良的情况。\"\n    ],\n    \"recommended_services\": [\n        \"刹车灯开关更换\",\n        \"电路系统检查\",\n        \"继电器更换（如必要）\",\n        \"专业电气系统诊断（如自行修复无效）\"\n    ]\n}\n```"
+            },
+            "logprobs": null,
+            "finish_reason": "stop"
+        }
+    ],
+    "usage": {
+        "prompt_tokens": 282,
+        "completion_tokens": 168,
+        "total_tokens": 450,
+        "prompt_tokens_details": {
+            "cached_tokens": 0
+        },
+        "prompt_cache_hit_tokens": 0,
+        "prompt_cache_miss_tokens": 282
+    },
+    "system_fingerprint": "fp_8802369eaa_prod0425fp8"
+}############################################################
+{
+    "messages": [
+        {
+            "role": "user",
+            "content": "\n    您是一名专业的汽车维修技师，正在帮助车主诊断车辆问题。请根据以下信息进行诊断：\n    \n    车辆信息：{\"brand\": \"Toyota\", \"model\": \"Camry\", \"year\": 2020, \"mileage\": 45000, \"last_service\": \"2023-12-15\", \"insurance_expiry\": \"2024-09-30\", \"next_maintenance\": \"2024-06-30\"}\n    用户描述的症状：仪表盘刹车灯闪烁\n    \n    请根据您的专业知识：\n    1. 分析可能的故障原因\n    2. 生成最多3个关键问题来进一步明确问题\n    3. 对于异响类问题，请建议用户试听哪种声音样本\n    \n    输出格式：\n    {\n        \"analysis\": \"对问题的初步分析\",\n        \"questions\": [\"问题1\", \"问题2\", \"问题3\"],\n        \"sound_suggestion\": \"建议试听的声音类型\"\n    }\n    "
+        }
+    ],
+    "model": "deepseek-chat",
+    "temperature": 0.3,
+    "max_tokens": 1500
+}{
+    "id": "86036988-61b0-4783-bcc9-6411eee0c8d4",
+    "object": "chat.completion",
+    "created": 1749458239,
+    "model": "deepseek-chat",
+    "choices": [
+        {
+            "index": 0,
+            "message": {
+                "role": "assistant",
+                "content": "```json\n{\n    \"analysis\": \"仪表盘刹车灯闪烁可能由多种原因引起，包括但不限于：刹车液位低、刹车片磨损严重、ABS系统故障、刹车系统电路问题或传感器故障。由于车辆是2020年的丰田凯美瑞，行驶里程为45000公里，且最近一次保养在2023年12月15日，建议优先检查刹车液位和刹车片磨损情况。\",\n    \"questions\": [\n        \"刹车灯闪烁时是否伴随其他警告灯亮起（如ABS灯）？\",\n        \"最近是否注意到刹车性能下降或刹车时有异响？\",\n        \"您是否检查过刹车液壶的液位是否在正常范围内？\"\n    ],\n    \"sound_suggestion\": \"如果用户报告刹车时有异响，建议试听高频金属摩擦声（可能为刹车片磨损指示器声音）或低频金属刮擦声（可能为刹车盘与刹车片异常接触）。\"\n}\n```"
+            },
+            "logprobs": null,
+            "finish_reason": "stop"
+        }
+    ],
+    "usage": {
+        "prompt_tokens": 206,
+        "completion_tokens": 202,
+        "total_tokens": 408,
+        "prompt_tokens_details": {
+            "cached_tokens": 64
+        },
+        "prompt_cache_hit_tokens": 64,
+        "prompt_cache_miss_tokens": 142
+    },
+    "system_fingerprint": "fp_8802369eaa_prod0425fp8"
+}############################################################
+{
+    "messages": [
+        {
+            "role": "user",
+            "content": "\n    基于以下诊断信息：\n    {\n    \"analysis\": \"仪表盘刹车灯闪烁可能由多种原因引起，包括但不限于：刹车液位低、刹车片磨损严重、ABS系统故障、刹车系统电路问题或传感器故障。由于车辆是2020年的丰田凯美瑞，行驶里程为45000公里，且最近一次保养在2023年12月15日，建议优先检查刹车液位和刹车片磨损情况。\",\n    \"questions\": [\n        \"刹车灯闪烁时是否伴随其他警告灯亮起（如ABS灯）？\",\n        \"最近是否注意到刹车性能下降或刹车时有异响？\",\n        \"您是否检查过刹车液壶的液位是否在正常范围内？\"\n    ],\n    \"sound_suggestion\": \"如果用户报告刹车时有异响，建议试听高频金属摩擦声（可能为刹车片磨损指示器声音）或低频金属刮擦声（可能为刹车盘与刹车片异常接触）。\"\n}\n    \n    请判断：\n    1. 车主是否能够自行修复问题？（是/否）\n    2. 如果可自行修复，提供详细的步骤指导\n    3. 如果需要专业维修，推荐维修项目\n    \n    输出格式：\n    {\n        \"self_repairable\": true/false,\n        \"repair_steps\": [\"步骤1\", \"步骤2\", ...],\n        \"recommended_services\": [\"服务1\", \"服务2\", ...]\n    }\n    "
+        }
+    ],
+    "model": "deepseek-chat",
+    "temperature": 0.3,
+    "max_tokens": 1500
+}{
+    "id": "ff942153-26f7-4c80-93db-9575519a72a4",
+    "object": "chat.completion",
+    "created": 1749458253,
+    "model": "deepseek-chat",
+    "choices": [
+        {
+            "index": 0,
+            "message": {
+                "role": "assistant",
+                "content": "```json\n{\n    \"self_repairable\": true,\n    \"repair_steps\": [\n        \"检查刹车液位：打开发动机舱，找到刹车液壶（通常标有'Brake Fluid'），观察液位是否在'MIN'和'MAX'标记之间。如果液位过低，添加符合规格的DOT 3或DOT 4刹车液至正常范围。\",\n        \"检查刹车片磨损：通过轮毂缝隙观察刹车片厚度。如果刹车片厚度小于3毫米（或看到磨损指示器金属片与刹车盘接触），则需要更换刹车片。\",\n        \"清除潜在电路问题：检查刹车灯开关（位于刹车踏板后方）是否松动或损坏，尝试重新插拔连接器。\"\n    ],\n    \"recommended_services\": [\n        \"刹车系统全面检查（含ABS传感器诊断）\",\n        \"刹车片/盘更换（如磨损超标）\",\n        \"刹车液更换（若液位长期未维护或污染）\"\n    ]\n}\n```"
+            },
+            "logprobs": null,
+            "finish_reason": "stop"
+        }
+    ],
+    "usage": {
+        "prompt_tokens": 310,
+        "completion_tokens": 216,
+        "total_tokens": 526,
+        "prompt_tokens_details": {
+            "cached_tokens": 0
+        },
+        "prompt_cache_hit_tokens": 0,
+        "prompt_cache_miss_tokens": 310
+    },
+    "system_fingerprint": "fp_8802369eaa_prod0425fp8"
+}############################################################
+{
+    "messages": [
+        {
+            "role": "user",
+            "content": "\n    您是一名专业的汽车维修技师，正在帮助车主诊断车辆问题。请根据以下信息进行诊断：\n    \n    车辆信息：{\"brand\": \"Toyota\", \"model\": \"Camry\", \"year\": 2020, \"mileage\": 45000, \"last_service\": \"2023-12-15\", \"insurance_expiry\": \"2024-09-30\", \"next_maintenance\": \"2024-06-30\"}\n    用户描述的症状：仪表盘机油灯闪烁\n    \n    请根据您的专业知识：\n    1. 分析可能的故障原因\n    2. 生成最多3个关键问题来进一步明确问题\n    3. 对于异响类问题，请建议用户试听哪种声音样本\n    \n    输出格式：\n    {\n        \"analysis\": \"对问题的初步分析\",\n        \"questions\": [\"问题1\", \"问题2\", \"问题3\"],\n        \"sound_suggestion\": \"建议试听的声音类型\"\n    }\n    "
+        }
+    ],
+    "model": "deepseek-chat",
+    "temperature": 0.3,
+    "max_tokens": 1500
+}{
+    "id": "068da3bd-8ea1-4318-84f8-bc342b80172b",
+    "object": "chat.completion",
+    "created": 1749459617,
+    "model": "deepseek-chat",
+    "choices": [
+        {
+            "index": 0,
+            "message": {
+                "role": "assistant",
+                "content": "```json\n{\n    \"analysis\": \"仪表盘机油灯闪烁通常与机油压力或油量问题相关。可能的原因包括：1) 机油油位过低；2) 机油泵故障导致压力不足；3) 机油压力传感器故障；4) 机油滤清器堵塞；5) 发动机内部磨损导致机油泄漏。由于车辆里程较低（45,000公里）且近期做过保养（2023-12-15），需优先检查是否因保养操作不当（如机油未加够或滤清器未装妥）或传感器误报。\",\n    \"questions\": [\n        \"最近一次保养后是否检查过机油油位？是否发现机油泄漏痕迹？\",\n        \"闪烁是持续出现还是仅在特定工况（如冷启动/高速行驶）下发生？\",\n        \"除机油灯外，是否伴随其他异常（如发动机噪音变大、动力下降）？\"\n    ],\n    \"sound_suggestion\": \"若用户报告异响，建议试听：1) 机油泵干运转的尖锐金属摩擦声；2) 气门机构因缺油导致的哒哒声；3) 油底壳漏油时的滴答声。\"\n}\n```"
+            },
+            "logprobs": null,
+            "finish_reason": "stop"
+        }
+    ],
+    "usage": {
+        "prompt_tokens": 206,
+        "completion_tokens": 254,
+        "total_tokens": 460,
+        "prompt_tokens_details": {
+            "cached_tokens": 192
+        },
+        "prompt_cache_hit_tokens": 192,
+        "prompt_cache_miss_tokens": 14
+    },
+    "system_fingerprint": "fp_8802369eaa_prod0425fp8"
+}############################################################
+{
+    "messages": [
+        {
+            "role": "user",
+            "content": "\n    基于以下诊断信息：\n    {\n    \"analysis\": \"仪表盘机油灯闪烁通常与机油压力或油量问题相关。可能的原因包括：1) 机油油位过低；2) 机油泵故障导致压力不足；3) 机油压力传感器故障；4) 机油滤清器堵塞；5) 发动机内部磨损导致机油泄漏。由于车辆里程较低（45,000公里）且近期做过保养（2023-12-15），需优先检查是否因保养操作不当（如机油未加够或滤清器未装妥）或传感器误报。\",\n    \"questions\": [\n        \"最近一次保养后是否检查过机油油位？是否发现机油泄漏痕迹？\",\n        \"闪烁是持续出现还是仅在特定工况（如冷启动/高速行驶）下发生？\",\n        \"除机油灯外，是否伴随其他异常（如发动机噪音变大、动力下降）？\"\n    ],\n    \"sound_suggestion\": \"若用户报告异响，建议试听：1) 机油泵干运转的尖锐金属摩擦声；2) 气门机构因缺油导致的哒哒声；3) 油底壳漏油时的滴答声。\"\n}\n    \n    请判断：\n    1. 车主是否能够自行修复问题？（是/否）\n    2. 如果可自行修复，提供详细的步骤指导\n    3. 如果需要专业维修，推荐维修项目\n    \n    输出格式：\n    {\n        \"self_repairable\": true/false,\n        \"repair_steps\": [\"步骤1\", \"步骤2\", ...],\n        \"recommended_services\": [\"服务1\", \"服务2\", ...]\n    }\n    "
+        }
+    ],
+    "model": "deepseek-chat",
+    "temperature": 0.3,
+    "max_tokens": 1500
+}{
+    "id": "3a96ffaf-0b97-4024-a884-8dc3d8b51ae0",
+    "object": "chat.completion",
+    "created": 1749459635,
+    "model": "deepseek-chat",
+    "choices": [
+        {
+            "index": 0,
+            "message": {
+                "role": "assistant",
+                "content": "```json\n{\n    \"self_repairable\": false,\n    \"repair_steps\": [\n        \"检查机油油位：在车辆水平停放且发动机冷却后，拔出机油尺，擦拭干净后重新插入再拔出，观察油位是否在MIN和MAX标记之间。\",\n        \"检查机油泄漏：目视检查发动机底部、油底壳、机油滤清器周围是否有油渍或滴漏痕迹。\",\n        \"检查机油滤清器：确认滤清器安装是否牢固，有无明显变形或漏油。\"\n    ],\n    \"recommended_services\": [\n        \"机油压力测试：使用专业设备测量机油压力，判断是否因机油泵或油路问题导致压力不足。\",\n        \"机油压力传感器检测：通过诊断仪读取传感器数据或替换测试，排除误报可能。\",\n        \"全面检查保养记录：核实上次保养时机油型号、加注量及滤清器安装是否符合规范。\",\n        \"发动机内部检查（如必要）：若发现持续低油压或异常磨损迹象，需拆解检查轴承、活塞等部件。\"\n    ]\n}\n``` \n\n### 说明：\n1. **不可自行修复**：因涉及机油压力测试、传感器诊断等需专业设备，且若为内部磨损或泵故障需拆解维修。  \n2. **自检步骤**：仅限基础油位/泄漏检查，若发现问题可临时添加机油，但需尽快送修。  \n3. **专业服务**：优先排查传感器和保养疏漏（低里程车辆常见），再逐步深入机械故障检测。"
+            },
+            "logprobs": null,
+            "finish_reason": "stop"
+        }
+    ],
+    "usage": {
+        "prompt_tokens": 362,
+        "completion_tokens": 335,
+        "total_tokens": 697,
+        "prompt_tokens_details": {
+            "cached_tokens": 64
+        },
+        "prompt_cache_hit_tokens": 64,
+        "prompt_cache_miss_tokens": 298
+    },
+    "system_fingerprint": "fp_8802369eaa_prod0425fp8"
+}############################################################
+{
+    "messages": [
+        {
+            "role": "user",
+            "content": "\n    您是一名专业的汽车维修技师，正在帮助车主诊断车辆问题。请根据以下信息进行诊断：\n    \n    车辆信息：{\"brand\": \"Toyota\", \"model\": \"Camry\", \"year\": 2020, \"mileage\": 45000, \"last_service\": \"2023-12-15\", \"insurance_expiry\": \"2024-09-30\", \"next_maintenance\": \"2024-06-30\"}\n    用户描述的症状：仪表盘机油灯闪烁\n    \n    请根据您的专业知识：\n    1. 分析可能的故障原因\n    2. 生成最多3个关键问题来进一步明确问题\n    3. 对于异响类问题，请建议用户试听哪种声音样本\n    \n    输出格式：\n    {\n        \"analysis\": \"对问题的初步分析\",\n        \"questions\": [\"问题1\", \"问题2\", \"问题3\"],\n        \"sound_suggestion\": \"建议试听的声音类型\"\n    }\n    "
+        }
+    ],
+    "model": "deepseek-chat",
+    "temperature": 0.3,
+    "max_tokens": 1500
+}{
+    "id": "7727b18c-0713-4af4-a579-2a687ef0fb16",
+    "object": "chat.completion",
+    "created": 1749459661,
+    "model": "deepseek-chat",
+    "choices": [
+        {
+            "index": 0,
+            "message": {
+                "role": "assistant",
+                "content": "```json\n{\n    \"analysis\": \"仪表盘机油灯闪烁可能由以下原因引起：1) 机油油位过低；2) 机油压力不足（可能因机油泵故障、油路堵塞或传感器问题）；3) 机油质量下降或型号不符；4) 电气系统故障（如传感器误报或线路问题）。由于车辆刚在2023年12月进行过保养，需优先排查是否机油未正确加注或存在泄漏。\",\n    \"questions\": [\n        \"机油灯闪烁是持续出现还是间歇性？是否伴随其他警告灯（如发动机灯）亮起？\",\n        \"最近一次保养后是否检查过机油尺，当前机油油位是否在正常范围内？\",\n        \"车辆近期是否有异常噪音（如发动机敲击声）或动力下降现象？\"\n    ],\n    \"sound_suggestion\": \"若用户报告异响，建议试听：1) 发动机低油压导致的液压挺杆‘嗒嗒’声；2) 机油泵故障的金属摩擦声；3) 油底壳泄漏的滴油声。\"\n}\n```"
+            },
+            "logprobs": null,
+            "finish_reason": "stop"
+        }
+    ],
+    "usage": {
+        "prompt_tokens": 206,
+        "completion_tokens": 235,
+        "total_tokens": 441,
+        "prompt_tokens_details": {
+            "cached_tokens": 192
+        },
+        "prompt_cache_hit_tokens": 192,
+        "prompt_cache_miss_tokens": 14
+    },
+    "system_fingerprint": "fp_8802369eaa_prod0425fp8"
+}############################################################
+{
+    "messages": [
+        {
+            "role": "user",
+            "content": "\n    基于以下诊断信息：\n    {\n    \"analysis\": \"仪表盘机油灯闪烁可能由以下原因引起：1) 机油油位过低；2) 机油压力不足（可能因机油泵故障、油路堵塞或传感器问题）；3) 机油质量下降或型号不符；4) 电气系统故障（如传感器误报或线路问题）。由于车辆刚在2023年12月进行过保养，需优先排查是否机油未正确加注或存在泄漏。\",\n    \"questions\": [\n        \"机油灯闪烁是持续出现还是间歇性？是否伴随其他警告灯（如发动机灯）亮起？\",\n        \"最近一次保养后是否检查过机油尺，当前机油油位是否在正常范围内？\",\n        \"车辆近期是否有异常噪音（如发动机敲击声）或动力下降现象？\"\n    ],\n    \"sound_suggestion\": \"若用户报告异响，建议试听：1) 发动机低油压导致的液压挺杆‘嗒嗒’声；2) 机油泵故障的金属摩擦声；3) 油底壳泄漏的滴油声。\"\n}\n    \n    请判断：\n    1. 车主是否能够自行修复问题？（是/否）\n    2. 如果可自行修复，提供详细的步骤指导\n    3. 如果需要专业维修，推荐维修项目\n    \n    输出格式：\n    {\n        \"self_repairable\": true/false,\n        \"repair_steps\": [\"步骤1\", \"步骤2\", ...],\n        \"recommended_services\": [\"服务1\", \"服务2\", ...]\n    }\n    "
+        }
+    ],
+    "model": "deepseek-chat",
+    "temperature": 0.3,
+    "max_tokens": 1500
+}{
+    "id": "95736eed-29b8-491a-8f06-e8fa67ec61e3",
+    "object": "chat.completion",
+    "created": 1749459677,
+    "model": "deepseek-chat",
+    "choices": [
+        {
+            "index": 0,
+            "message": {
+                "role": "assistant",
+                "content": "```json\n{\n    \"self_repairable\": false,\n    \"repair_steps\": [\n        \"检查机油油位：确保车辆停在水平地面，熄火后等待5分钟，拔出机油尺擦净后重新插入再取出，观察油位是否在MIN和MAX标记之间。\",\n        \"检查机油泄漏：目视检查发动机舱底部和油底壳是否有油渍或滴漏痕迹。\",\n        \"检查机油质量：若油位正常，观察机油颜色和质地（是否过黑、稀释或有金属屑）。\"\n    ],\n    \"recommended_services\": [\n        \"机油压力测试（使用机械压力表验证实际油压是否达标）\",\n        \"机油泵及油路检查（排查泵体磨损或油路堵塞）\",\n        \"机油压力传感器及电路诊断（检测传感器信号和线路短路/断路）\",\n        \"全面泄漏检测（包括曲轴油封、油底壳垫等）\"\n    ]\n}\n``` \n\n### 说明：\n1. **不可自行修复**：因涉及机油压力系统（如泵体、油路）和电气诊断，需专业设备。基础检查仅能排除油位/泄漏问题，但若油位正常则需进一步专业排查。\n2. **维修项目优先级**：建议优先执行机油压力测试（快速判断是否为机械问题），再根据结果深入检查泵体或传感器。"
+            },
+            "logprobs": null,
+            "finish_reason": "stop"
+        }
+    ],
+    "usage": {
+        "prompt_tokens": 343,
+        "completion_tokens": 293,
+        "total_tokens": 636,
+        "prompt_tokens_details": {
+            "cached_tokens": 64
+        },
+        "prompt_cache_hit_tokens": 64,
+        "prompt_cache_miss_tokens": 279
+    },
+    "system_fingerprint": "fp_8802369eaa_prod0425fp8"
+}############################################################
+{
+    "messages": [
+        {
+            "role": "user",
+            "content": "\n    您是一名专业的汽车维修技师，正在帮助车主诊断车辆问题。请根据以下信息进行诊断：\n    \n    车辆信息：{\"brand\": \"Toyota\", \"model\": \"Camry\", \"year\": 2020, \"mileage\": 45000, \"last_service\": \"2023-12-15\", \"insurance_expiry\": \"2024-09-30\", \"next_maintenance\": \"2024-06-30\"}\n    用户描述的症状：        # st.session_state.current_questions = []\n\n    \n    请根据您的专业知识：\n    1. 分析可能的故障原因\n    2. 生成最多3个关键问题来进一步明确问题\n    3. 对于异响类问题，请建议用户试听哪种声音样本\n    \n    输出格式：\n    {\n        \"analysis\": \"对问题的初步分析\",\n        \"questions\": [\"问题1\", \"问题2\", \"问题3\"],\n        \"sound_suggestion\": \"建议试听的声音类型\"\n    }\n    "
+        }
+    ],
+    "model": "deepseek-chat",
+    "temperature": 0.3,
+    "max_tokens": 1500
+}{
+    "id": "a0966d7f-6a8e-40db-a943-67f18ec516ed",
+    "object": "chat.completion",
+    "created": 1749459762,
+    "model": "deepseek-chat",
+    "choices": [
+        {
+            "index": 0,
+            "message": {
+                "role": "assistant",
+                "content": "{\n    \"analysis\": \"由于用户未提供具体的症状描述，无法进行准确的故障诊断。2020款丰田凯美瑞行驶45000公里且最近一次保养在2023年12月完成，属于正常维护周期内的车辆。建议先获取更多症状信息。\",\n    \"questions\": [\n        \"请描述具体的问题表现（如异响位置/发动机症状/仪表盘警告灯等）\",\n        \"问题是否在特定条件下出现（如冷启动/加速/转向时）？\",\n        \"最近是否有过非正规维修或异常驾驶情况（涉水/碰撞等）？\"\n    ],\n    \"sound_suggestion\": \"若涉及异响，可试听：1) 高频金属声（皮带/张紧轮） 2) 低沉敲击声（发动机爆震） 3) 橡胶摩擦声（悬挂衬套）\"\n}"
+            },
+            "logprobs": null,
+            "finish_reason": "stop"
+        }
+    ],
+    "usage": {
+        "prompt_tokens": 211,
+        "completion_tokens": 185,
+        "total_tokens": 396,
+        "prompt_tokens_details": {
+            "cached_tokens": 64
+        },
+        "prompt_cache_hit_tokens": 64,
+        "prompt_cache_miss_tokens": 147
+    },
+    "system_fingerprint": "fp_8802369eaa_prod0425fp8"
+}############################################################
+{
+    "messages": [
+        {
+            "role": "user",
+            "content": "\n    基于以下诊断信息：\n    {\n    \"analysis\": \"由于用户未提供具体的症状描述，无法进行准确的故障诊断。2020款丰田凯美瑞行驶45000公里且最近一次保养在2023年12月完成，属于正常维护周期内的车辆。建议先获取更多症状信息。\",\n    \"questions\": [\n        \"请描述具体的问题表现（如异响位置/发动机症状/仪表盘警告灯等）\",\n        \"问题是否在特定条件下出现（如冷启动/加速/转向时）？\",\n        \"最近是否有过非正规维修或异常驾驶情况（涉水/碰撞等）？\"\n    ],\n    \"sound_suggestion\": \"若涉及异响，可试听：1) 高频金属声（皮带/张紧轮） 2) 低沉敲击声（发动机爆震） 3) 橡胶摩擦声（悬挂衬套）\"\n}\n    \n    请判断：\n    1. 车主是否能够自行修复问题？（是/否）\n    2. 如果可自行修复，提供详细的步骤指导\n    3. 如果需要专业维修，推荐维修项目\n    \n    输出格式：\n    {\n        \"self_repairable\": true/false,\n        \"repair_steps\": [\"步骤1\", \"步骤2\", ...],\n        \"recommended_services\": [\"服务1\", \"服务2\", ...]\n    }\n    "
+        }
+    ],
+    "model": "deepseek-chat",
+    "temperature": 0.3,
+    "max_tokens": 1500
+}{
+    "id": "39b9f3f1-c7d5-4841-8cbf-69f9d119119d",
+    "object": "chat.completion",
+    "created": 1749459778,
+    "model": "deepseek-chat",
+    "choices": [
+        {
+            "index": 0,
+            "message": {
+                "role": "assistant",
+                "content": "```json\n{\n    \"self_repairable\": false,\n    \"repair_steps\": [],\n    \"recommended_services\": [\n        \"建议联系专业技师进行详细诊断\",\n        \"根据症状可能需要检查发动机系统、悬挂系统或电气系统\",\n        \"若存在异响，需针对性检查相关部件（如皮带、张紧轮、悬挂衬套等）\"\n    ]\n}\n```"
+            },
+            "logprobs": null,
+            "finish_reason": "stop"
+        }
+    ],
+    "usage": {
+        "prompt_tokens": 297,
+        "completion_tokens": 85,
+        "total_tokens": 382,
+        "prompt_tokens_details": {
+            "cached_tokens": 0
+        },
+        "prompt_cache_hit_tokens": 0,
+        "prompt_cache_miss_tokens": 297
+    },
+    "system_fingerprint": "fp_8802369eaa_prod0425fp8"
+}############################################################
+{
+    "messages": [
+        {
+            "role": "user",
+            "content": "\n    您是一名专业的汽车维修技师，正在帮助车主诊断车辆问题。请根据以下信息进行诊断：\n    \n    车辆信息：{\"brand\": \"Toyota\", \"model\": \"Camry\", \"year\": 2020, \"mileage\": 45000, \"last_service\": \"2023-12-15\", \"insurance_expiry\": \"2024-09-30\", \"next_maintenance\": \"2024-06-30\"}\n    用户描述的症状：        # st.session_state.current_questions = []\n\nQ: 请描述具体的问题表现（如异响位置/发动机症状/仪表盘警告灯等）\nA: 发动机异响\nQ: 问题是否在特定条件下出现（如冷启动/加速/转向时）？\nA: 冷启动\nQ: 最近是否有过非正规维修或异常驾驶情况（涉水/碰撞等）？\nA: 碰撞\n    \n    请根据您的专业知识：\n    1. 分析可能的故障原因\n    2. 生成最多3个关键问题来进一步明确问题\n    3. 对于异响类问题，请建议用户试听哪种声音样本\n    \n    输出格式：\n    {\n        \"analysis\": \"对问题的初步分析\",\n        \"questions\": [\"问题1\", \"问题2\", \"问题3\"],\n        \"sound_suggestion\": \"建议试听的声音类型\"\n    }\n    "
+        }
+    ],
+    "model": "deepseek-chat",
+    "temperature": 0.3,
+    "max_tokens": 1500
+}{
+    "id": "2624f224-4285-4f90-8e1d-9031e7ae7f52",
+    "object": "chat.completion",
+    "created": 1749459835,
+    "model": "deepseek-chat",
+    "choices": [
+        {
+            "index": 0,
+            "message": {
+                "role": "assistant",
+                "content": "```json\n{\n    \"analysis\": \"根据用户描述，2020年丰田凯美瑞在冷启动时出现发动机异响，且近期发生过碰撞。可能的故障原因包括：1) 碰撞导致的发动机支架松动或部件位移；2) 皮带张紧轮或附件皮带因碰撞变形/老化；3) 冷启动时机油未充分润滑导致的暂时性机械摩擦；4) 排气系统部件（如隔热罩）因碰撞变形产生共振。需优先排查碰撞相关损伤。\",\n    \"questions\": [\n        \"异响的大致频率是高频金属声（如吱吱声）还是低频闷响（如咚咚声）？\",\n        \"碰撞后是否检查过发动机舱内部件（如皮带、支架、排气系统）的可见损伤？\",\n        \"异响持续时间是仅冷启动初期（30秒内）还是持续到水温正常？\"\n    ],\n    \"sound_suggestion\": \"建议试听：1) 皮带打滑的尖锐吱吱声；2) 金属支架松动的咔嗒声；3) 排气系统共振的低频嗡嗡声。\"\n}\n```"
+            },
+            "logprobs": null,
+            "finish_reason": "stop"
+        }
+    ],
+    "usage": {
+        "prompt_tokens": 292,
+        "completion_tokens": 238,
+        "total_tokens": 530,
+        "prompt_tokens_details": {
+            "cached_tokens": 64
+        },
+        "prompt_cache_hit_tokens": 64,
+        "prompt_cache_miss_tokens": 228
+    },
+    "system_fingerprint": "fp_8802369eaa_prod0425fp8"
+}############################################################
+{
+    "messages": [
+        {
+            "role": "user",
+            "content": "\n    基于以下诊断信息：\n    {\n    \"analysis\": \"根据用户描述，2020年丰田凯美瑞在冷启动时出现发动机异响，且近期发生过碰撞。可能的故障原因包括：1) 碰撞导致的发动机支架松动或部件位移；2) 皮带张紧轮或附件皮带因碰撞变形/老化；3) 冷启动时机油未充分润滑导致的暂时性机械摩擦；4) 排气系统部件（如隔热罩）因碰撞变形产生共振。需优先排查碰撞相关损伤。\",\n    \"questions\": [\n        \"异响的大致频率是高频金属声（如吱吱声）还是低频闷响（如咚咚声）？\",\n        \"碰撞后是否检查过发动机舱内部件（如皮带、支架、排气系统）的可见损伤？\",\n        \"异响持续时间是仅冷启动初期（30秒内）还是持续到水温正常？\"\n    ],\n    \"sound_suggestion\": \"建议试听：1) 皮带打滑的尖锐吱吱声；2) 金属支架松动的咔嗒声；3) 排气系统共振的低频嗡嗡声。\"\n}\n    \n    请判断：\n    1. 车主是否能够自行修复问题？（是/否）\n    2. 如果可自行修复，提供详细的步骤指导\n    3. 如果需要专业维修，推荐维修项目\n    \n    输出格式：\n    {\n        \"self_repairable\": true/false,\n        \"repair_steps\": [\"步骤1\", \"步骤2\", ...],\n        \"recommended_services\": [\"服务1\", \"服务2\", ...]\n    }\n    "
+        }
+    ],
+    "model": "deepseek-chat",
+    "temperature": 0.3,
+    "max_tokens": 1500
+}{
+    "id": "bf54a833-90bd-4b24-bd54-ac86aa16ffde",
+    "object": "chat.completion",
+    "created": 1749459851,
+    "model": "deepseek-chat",
+    "choices": [
+        {
+            "index": 0,
+            "message": {
+                "role": "assistant",
+                "content": "```json\n{\n    \"self_repairable\": false,\n    \"repair_steps\": [],\n    \"recommended_services\": [\n        \"检查发动机支架是否松动或损坏\",\n        \"检查皮带张紧轮和附件皮带是否变形或老化\",\n        \"检查排气系统部件（如隔热罩）是否因碰撞变形\",\n        \"冷启动时机油润滑系统检查\",\n        \"异响源定位与诊断\"\n    ]\n}\n```"
+            },
+            "logprobs": null,
+            "finish_reason": "stop"
+        }
+    ],
+    "usage": {
+        "prompt_tokens": 346,
+        "completion_tokens": 94,
+        "total_tokens": 440,
+        "prompt_tokens_details": {
+            "cached_tokens": 0
+        },
+        "prompt_cache_hit_tokens": 0,
+        "prompt_cache_miss_tokens": 346
+    },
+    "system_fingerprint": "fp_8802369eaa_prod0425fp8"
+}############################################################
+{
+    "messages": [
+        {
+            "role": "user",
+            "content": "\n    您是一名专业的汽车维修技师，正在帮助车主诊断车辆问题。请根据以下信息进行诊断：\n    \n    车辆信息：{\"brand\": \"Toyota\", \"model\": \"Camry\", \"year\": 2020, \"mileage\": 45000, \"last_service\": \"2023-12-15\", \"insurance_expiry\": \"2024-09-30\", \"next_maintenance\": \"2024-06-30\"}\n    用户描述的症状：        # st.session_state.current_questions = []\n\nQ: 请描述具体的问题表现（如异响位置/发动机症状/仪表盘警告灯等）\nA: 发动机异响\nQ: 问题是否在特定条件下出现（如冷启动/加速/转向时）？\nA: 冷启动\nQ: 最近是否有过非正规维修或异常驾驶情况（涉水/碰撞等）？\nA: 碰撞\nQ: 异响的大致频率是高频金属声（如吱吱声）还是低频闷响（如咚咚声）？\nA: 低频闷响（如咚咚声）\nQ: 碰撞后是否检查过发动机舱内部件（如皮带、支架、排气系统）的可见损伤？\nA: 无\nQ: 异响持续时间是仅冷启动初期（30秒内）还是持续到水温正常？\nA: 水温正常\n    \n    请根据您的专业知识：\n    1. 分析可能的故障原因\n    2. 生成最多3个关键问题来进一步明确问题\n    3. 对于异响类问题，请建议用户试听哪种声音样本\n    \n    输出格式：\n    {\n        \"analysis\": \"对问题的初步分析\",\n        \"questions\": [\"问题1\", \"问题2\", \"问题3\"],\n        \"sound_suggestion\": \"建议试听的声音类型\"\n    }\n    "
+        }
+    ],
+    "model": "deepseek-chat",
+    "temperature": 0.3,
+    "max_tokens": 1500
+}{
+    "id": "99180ea4-4805-4ff2-99dc-72aabe8e5459",
+    "object": "chat.completion",
+    "created": 1749459931,
+    "model": "deepseek-chat",
+    "choices": [
+        {
+            "index": 0,
+            "message": {
+                "role": "assistant",
+                "content": "```json\n{\n    \"analysis\": \"根据用户描述，2020款丰田凯美瑞在冷启动时出现低频闷响（咚咚声），且持续到水温正常，结合碰撞史但未检查发动机舱内部件，可能原因包括：1) 发动机支架因碰撞位移或老化导致共振；2) 排气系统（如排气管吊耳、消声器）因碰撞变形或松动；3) 皮带张紧轮或惰轮轴承因冲击损伤。需优先排查碰撞相关部件的物理损伤。\",\n    \"questions\": [\n        \"碰撞的具体部位和力度如何？（如正面/侧面/轻微剐蹭）\",\n        \"冷启动时打开引擎盖观察异响是否伴随明显振动？\",\n        \"低速行驶时（如20-40km/h）异响是否会变化或消失？\"\n    ],\n    \"sound_suggestion\": \"建议试听：1) 发动机支架断裂的沉闷金属撞击声；2) 排气管吊耳脱落的低频晃动声；3) 张紧轮轴承损坏的规律性闷响。\"\n}\n```"
+            },
+            "logprobs": null,
+            "finish_reason": "stop"
+        }
+    ],
+    "usage": {
+        "prompt_tokens": 389,
+        "completion_tokens": 231,
+        "total_tokens": 620,
+        "prompt_tokens_details": {
+            "cached_tokens": 192
+        },
+        "prompt_cache_hit_tokens": 192,
+        "prompt_cache_miss_tokens": 197
+    },
+    "system_fingerprint": "fp_8802369eaa_prod0425fp8"
+}############################################################
+{
+    "messages": [
+        {
+            "role": "user",
+            "content": "\n    基于以下诊断信息：\n    {\n    \"analysis\": \"根据用户描述，2020款丰田凯美瑞在冷启动时出现低频闷响（咚咚声），且持续到水温正常，结合碰撞史但未检查发动机舱内部件，可能原因包括：1) 发动机支架因碰撞位移或老化导致共振；2) 排气系统（如排气管吊耳、消声器）因碰撞变形或松动；3) 皮带张紧轮或惰轮轴承因冲击损伤。需优先排查碰撞相关部件的物理损伤。\",\n    \"questions\": [\n        \"碰撞的具体部位和力度如何？（如正面/侧面/轻微剐蹭）\",\n        \"冷启动时打开引擎盖观察异响是否伴随明显振动？\",\n        \"低速行驶时（如20-40km/h）异响是否会变化或消失？\"\n    ],\n    \"sound_suggestion\": \"建议试听：1) 发动机支架断裂的沉闷金属撞击声；2) 排气管吊耳脱落的低频晃动声；3) 张紧轮轴承损坏的规律性闷响。\"\n}\n    \n    请判断：\n    1. 车主是否能够自行修复问题？（是/否）\n    2. 如果可自行修复，提供详细的步骤指导\n    3. 如果需要专业维修，推荐维修项目\n    \n    输出格式：\n    {\n        \"self_repairable\": true/false,\n        \"repair_steps\": [\"步骤1\", \"步骤2\", ...],\n        \"recommended_services\": [\"服务1\", \"服务2\", ...]\n    }\n    "
+        }
+    ],
+    "model": "deepseek-chat",
+    "temperature": 0.3,
+    "max_tokens": 1500
+}{
+    "id": "d43e2ef2-a6de-430d-b6bc-912755ee3e9c",
+    "object": "chat.completion",
+    "created": 1749459946,
+    "model": "deepseek-chat",
+    "choices": [
+        {
+            "index": 0,
+            "message": {
+                "role": "assistant",
+                "content": "```json\n{\n    \"self_repairable\": false,\n    \"repair_steps\": [],\n    \"recommended_services\": [\n        \"检查发动机支架是否位移或老化，必要时更换\",\n        \"检查排气系统（排气管吊耳、消声器）是否变形或松动，必要时修复或更换\",\n        \"检查皮带张紧轮或惰轮轴承是否损伤，必要时更换\",\n        \"全面检查发动机舱内部件，确认是否有其他因碰撞导致的损伤\"\n    ]\n}\n```"
+            },
+            "logprobs": null,
+            "finish_reason": "stop"
+        }
+    ],
+    "usage": {
+        "prompt_tokens": 339,
+        "completion_tokens": 106,
+        "total_tokens": 445,
+        "prompt_tokens_details": {
+            "cached_tokens": 0
+        },
+        "prompt_cache_hit_tokens": 0,
+        "prompt_cache_miss_tokens": 339
+    },
+    "system_fingerprint": "fp_8802369eaa_prod0425fp8"
+}
