@@ -1,3 +1,7 @@
+"""
+V3.0 版本：智能汽车故障诊断助手
+完整展示诊断历史，新一轮对话不覆盖之前的展示信息
+"""
 import streamlit as st
 from langchain.chains import SequentialChain, TransformChain
 from langchain.memory import ConversationBufferMemory
@@ -163,7 +167,7 @@ def setup_repair_decision_chain():
 def recommend_shops(inputs: dict) -> dict:
     decision = json.loads(inputs["repair_decision"])
     
-    if decision.get("self_repairable", False):
+    if decision.get("self_repairable", False) is False:
         return {"shop_recommendations": json.dumps([])}
     
     # 根据位置和推荐服务筛选门店

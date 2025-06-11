@@ -1,9 +1,13 @@
 """
-V1.0版本：智能汽车故障诊断助手
-基于DeepSeek LLM和LangChain实现的汽车故障诊断和维修店推荐系统
+V3  版本：
+修复问题：
+1：展示历史诊断记录，支持多轮问答
+2：门店推荐
+
+使用DeepSeek LLM进行信息提取、诊断、决策和门店推荐
+智能汽车故障诊断助手
+这是一个基于Streamlit的智能汽车故障诊断应用，使用DeepSeek LLM进行信息提取、诊断、决策和门店推荐。用户可以输入车牌号和车辆问题描述，系统将自动提取车辆信息，进行故障诊断，并推荐合适的维修店。
 """
-
-
 import streamlit as st
 from langchain.chains import SequentialChain, TransformChain
 from langchain.memory import ConversationBufferMemory
@@ -18,6 +22,7 @@ import json
 import datetime
 import random
 import os
+import re
 
 # 初始化DeepSeek LLM
 api_key = os.getenv("DEEPSEEK_API_KEY")  
@@ -25,34 +30,36 @@ llm = DeepSeekLLM(api_key=api_key, temperature=0.3, max_tokens=1500)
 
 # 模拟车辆数据库
 VEHICLE_DB = {
-    "京A12345": {
+    "川A12345": {
         "brand": "Toyota",
         "model": "Camry",
-        "year": 2020,
+        "year": 2023,
         "mileage": 45000,
         "last_service": "2023-12-15",
-        "insurance_expiry": "2024-09-30",
-        "next_maintenance": "2024-06-30"
+        "insurance_expiry": "2025-09-30",
+        "next_maintenance": "2026-06-30"
     },
-    "沪B67890": {
+    "川B67890": {
         "brand": "Honda",
         "model": "CR-V",
         "year": 2019,
         "mileage": 60000,
-        "last_service": "2023-11-20",
-        "insurance_expiry": "2024-08-15",
-        "next_maintenance": "2024-05-20"
+        "last_service": "2024-11-20",
+        "insurance_expiry": "2025-08-15",
+        "next_maintenance": "2026-05-20"
     }
 }
 
 # 模拟维修店数据库
 REPAIR_SHOPS = [
     {"id": 1, "name": "诚信汽修", "distance": "1.2km", "rating": 4.8, 
-     "services": ["机油更换", "刹车维修", "发动机诊断"], "price_level": "$$"},
+     "services": ["机油更换", "刹车维修", "发动机诊断", "轮胎更换", "保养套餐", "电子诊断", "快速保养", "玻璃水加注", "简单维修", "空调维修", "电瓶更换", "变速箱维修", "悬挂系统检查", "灯光维修", "喷漆服务"], "price_level": "$$"},
     {"id": 2, "name": "途虎养车工场店", "distance": "2.3km", "rating": 4.7, 
-     "services": ["轮胎更换", "保养套餐", "电子诊断"], "price_level": "$$$"},
+     "services": ["轮胎更换", "保养套餐", "电子诊断", "机油更换", "刹车维修", "发动机诊断", "空调维修", "电瓶更换", "变速箱维修", "悬挂系统检查", "灯光维修", "喷漆服务", "快速保养", "玻璃水加注", "简单维修"], "price_level": "$$$"},
     {"id": 3, "name": "小李快修", "distance": "0.8km", "rating": 4.5, 
-     "services": ["快速保养", "玻璃水加注", "简单维修"], "price_level": "$"}
+     "services": ["快速保养", "玻璃水加注", "简单维修", "机油更换", "刹车维修", "轮胎更换", "空调维修", "电瓶更换", "发动机诊断", "灯光维修", "喷漆服务"], "price_level": "$"},
+    {"id": 4, "name": "点点修车", "distance": "8km", "rating": 5.0, 
+     "services": ["维修保养", "玻璃水加注", "简单维修", "机油更换", "刹车维修", "轮胎更换", "发动机诊断", "空调维修", "电瓶更换", "变速箱维修", "悬挂系统检查", "灯光维修", "喷漆服务", "保养套餐", "电子诊断"], "price_level": "$$$$"}
 ]
 
 # 模拟知识库音频
@@ -168,24 +175,38 @@ def setup_repair_decision_chain():
 # 4. 门店推荐链
 def recommend_shops(inputs: dict) -> dict:
     decision = json.loads(inputs["repair_decision"])
-    
-    if decision.get("self_repairable", False):
-        return {"shop_recommendations": json.dumps([])}
+    print("------------------维修决策   ", decision)
+    # if decision.get("self_repairable", False) is False:
+    #     return {"shop_recommendations": json.dumps([])}
     
     # 根据位置和推荐服务筛选门店
     location = inputs["location"]
     recommended_services = decision.get("recommended_services", [])
-    
+    print("自定义维修服务   ", recommended_services)
     filtered_shops = []
+
+    # 将推荐服务拆分为单个字符集合
+    def extract_keywords(service):
+        # 只保留中文和英文字符
+        return set(re.findall(r'[\u4e00-\u9fa5a-zA-Z]', service))
+
+    recommended_keywords = set()
+    for service in recommended_services:
+        recommended_keywords |= extract_keywords(service)
+
     for shop in REPAIR_SHOPS:
-        # 简单匹配服务（实际应用中应有更复杂的匹配逻辑）
-        if any(service in shop["services"] for service in recommended_services):
+        # 将门店服务也拆分为关键词集合
+        shop_keywords = set()
+        for s in shop["services"]:
+            shop_keywords |= extract_keywords(s)
+        # 模糊匹配：只要有交集就算匹配
+        if recommended_keywords & shop_keywords:
             shop["match_score"] = random.uniform(0.7, 1.0)  # 模拟匹配度计算
             filtered_shops.append(shop)
     
     # 按距离和评分排序
     filtered_shops.sort(key=lambda x: (x["distance"], -x["rating"]))
-    
+    print("=======筛选后的维修店：", filtered_shops)
     return {"shop_recommendations": json.dumps(filtered_shops[:3])}
 
 shop_recommendation_chain = TransformChain(
@@ -215,7 +236,7 @@ def create_full_workflow():
 # Streamlit UI
 def main():
     st.set_page_config(page_title="智能汽车故障诊断", layout="wide")
-    st.title("🚗 智能汽车故障诊断助手")
+    st.title("🚗 汽车故障诊断——智能助手")
     
     # 初始化session状态
     if "diagnosis_stage" not in st.session_state:
@@ -223,13 +244,14 @@ def main():
         st.session_state.memory = ConversationBufferMemory()
         st.session_state.workflow = create_full_workflow()
         st.session_state.answers = {}
-        st.session_state.current_questions = []
+        # st.session_state.current_questions = []
+        st.session_state.diagnosis_history = []  # 新增：存储历史诊断记录**
     
     # 侧边栏 - 车辆信息输入
     with st.sidebar:
         st.header("车辆信息")
-        license_plate = st.text_input("车牌号", "京A12345")
-        location = st.text_input("当前位置", "北京市海淀区")
+        license_plate = st.text_input("车牌号", "川A12345")
+        location = st.text_input("当前位置", "成都市武侯区天泰路")
         
         st.header("车辆状态")
         if license_plate in VEHICLE_DB:
@@ -242,24 +264,91 @@ def main():
             # 服务提醒
             today = datetime.date.today()
             insurance_expiry = datetime.datetime.strptime(vehicle["insurance_expiry"], "%Y-%m-%d").date()
-            if (insurance_expiry - today).days < 30:
+            days_to_expiry = (insurance_expiry - today).days
+            if days_to_expiry < 0:
+                # 已过期，计算过期了多久
+                overdue_days = abs(days_to_expiry)
+                years = overdue_days // 365
+                months = (overdue_days % 365) // 30
+                days = (overdue_days % 365) % 30
+                st.error(f"⛔ 保险已于 {overdue_days} 天前过期（到期日: {vehicle['insurance_expiry']}）")
+            elif days_to_expiry < 300:
                 st.warning(f"⏰ 保险将于 {vehicle['insurance_expiry']} 到期")
             
             next_maintenance = datetime.datetime.strptime(vehicle["next_maintenance"], "%Y-%m-%d").date()
-            if (next_maintenance - today).days < 30:
+            if (next_maintenance - today).days < 300:
                 st.warning(f"🔧 下次保养时间: {vehicle['next_maintenance']}")
     
     # 主界面 - 诊断流程
     if st.session_state.diagnosis_stage == "initial":
         st.subheader("请描述您的车辆问题")
-        symptoms = st.text_area("例如：冷启动时有哒哒异响，仪表盘机油灯闪烁", height=150)
+                # 使用st.text_area的key参数和session_state来跟踪文本内容
+        if 'symptoms_text' not in st.session_state:
+            st.session_state.symptoms_text = ""
         
+        # 创建文本输入区域
+        symptoms = st.text_area(
+            "例如：冷启动时有哒哒异响，仪表盘机油灯闪烁",
+            value=st.session_state.symptoms_text,
+            height=150,
+            key="symptoms_input",
+            help="按Enter键提交，Ctrl+Enter换行"
+        )
+        
+        # 监听键盘事件
+        if st.session_state.get('symptoms_input_last_value', '') != symptoms:
+            st.session_state.symptoms_text = symptoms
+            st.session_state.symptoms_input_last_value = symptoms
+            
+            # 检查是否按下了Enter键（无Ctrl）
+            if '\n' in symptoms and not st.session_state.get('ctrl_pressed', False):
+                # 移除最后一个换行符（由Enter键产生）
+                cleaned_symptoms = symptoms.rsplit('\n', 1)[0]
+                st.session_state.symptoms_text = cleaned_symptoms
+                
+                if cleaned_symptoms.strip():
+                    # 自动触发诊断
+                    st.session_state.symptoms = cleaned_symptoms
+                    st.session_state.license_plate = license_plate
+                    st.session_state.location = location
+                    st.session_state.diagnosis_stage = "processing"
+                    st.rerun()
+                else:
+                    st.error("请输入车辆问题描述")
+        
+        # 添加JavaScript检测Ctrl+Enter
+        st.components.v1.html("""
+        <script>
+        const textarea = document.querySelector("textarea[data-testid='stTextArea']");
+        if (textarea) {
+            textarea.addEventListener('keydown', function(e) {
+                if (e.key === 'Enter' && e.ctrlKey) {
+                    // 标记Ctrl+Enter被按下
+                    window.parent.postMessage({
+                        type: 'streamlit:setComponentValue',
+                        key: 'ctrl_enter_pressed',
+                        value: true
+                    }, '*');
+                }
+            });
+        }
+        </script>
+        """, height=0)
+        
+        # 处理JavaScript消息
+        if st.session_state.get('ctrl_enter_pressed'):
+            st.session_state.ctrl_pressed = True
+            st.session_state.ctrl_enter_pressed = False
+        else:
+            st.session_state.ctrl_pressed = False
+        
+        # 保留手动提交按钮作为备选方案
         if st.button("开始诊断"):
-            if not symptoms.strip():
+            if not st.session_state.symptoms_text.strip():
                 st.error("请输入车辆问题描述")
                 return
                 
-            st.session_state.symptoms = symptoms
+            st.session_state.symptoms = st.session_state.symptoms_text
             st.session_state.license_plate = license_plate
             st.session_state.location = location
             st.session_state.diagnosis_stage = "processing"
@@ -267,6 +356,21 @@ def main():
     
     # 诊断处理中
     elif st.session_state.diagnosis_stage == "processing":
+        # 先显示历史记录
+        if st.session_state.diagnosis_history:
+            st.subheader("📝 诊断历史记录")
+            for i, entry in enumerate(st.session_state.diagnosis_history, 1):
+                with st.expander(f"诊断轮次 {i}", expanded=True):
+                    if entry["stage"] == "question_answers":
+                        st.markdown("**问题与回答:**")
+                        for q, a in zip(entry["questions"], entry["answers"]):
+                            st.markdown(f"- **问:** {q}")
+                            st.markdown(f"  **答:** {a}")
+                    elif entry.get("diagnosis_result"):
+                        st.markdown("**诊断分析:**")
+                        st.write(entry["diagnosis_result"]["analysis"])
+                        if "sound_suggestion" in entry["diagnosis_result"]:
+                            st.audio(SOUND_LIBRARY.get(entry["diagnosis_result"]["sound_suggestion"]))
         print("----1---")
         with st.spinner("正在分析您的车辆问题..."):
             print("----1.1---")
@@ -308,6 +412,16 @@ def main():
                 repair_decision = json.loads(result["repair_decision"])
                 shop_recommendations = json.loads(result["shop_recommendations"])
                 
+                history_entry = {
+                    "stage": "diagnosis",
+                    "diagnosis_result": diagnosis_result,
+                    "repair_decision": repair_decision,
+                    "shop_recommendations": shop_recommendations
+                }
+                st.session_state.diagnosis_history.append(history_entry)  # 保存完整诊断结果
+                
+
+
                 # 存储结果
                 st.session_state.diagnosis_result = diagnosis_result
                 st.session_state.repair_decision = repair_decision
@@ -316,7 +430,7 @@ def main():
                 
                 # 如果有声音建议，准备音频
                 sound_type = diagnosis_result.get("sound_suggestion")
-                if sound_type and sound_type in SOUND_LIBRARY:
+                if sound_type and sound_type in SOUND_LIBRARY and SOUND_LIBRARY[sound_type]:
                     st.session_state.sound_url = SOUND_LIBRARY[sound_type]
                 else:
                     st.session_state.sound_url = None
@@ -338,8 +452,25 @@ def main():
                 st.rerun()
     
     # 显示诊断结果
-    elif st.session_state.diagnosis_stage == "show_results":
-        st.subheader("诊断结果")
+    elif st.session_state.diagnosis_stage == "show_results":       
+        # 始终显示完整历史记录
+        if st.session_state.diagnosis_history:
+            st.subheader("📝 完整诊断历史")
+            for i, entry in enumerate(st.session_state.diagnosis_history, 1):
+                with st.expander(f"诊断轮次 {i}", expanded=True):
+                    if entry["stage"] == "question_answers":
+                        st.markdown("**问题与回答:**")
+                        for q, a in zip(entry["questions"], entry["answers"]):
+                            st.markdown(f"- **问:** {q}")
+                            st.markdown(f"  **答:** {a}")
+                    elif entry.get("diagnosis_result"):
+                        st.markdown("**诊断分析:**")
+                        st.write(entry["diagnosis_result"]["analysis"])
+                        if "sound_suggestion" in entry["diagnosis_result"]:
+                            st.audio(SOUND_LIBRARY.get(entry["diagnosis_result"]["sound_suggestion"]))
+        
+        # 显示当前诊断结果
+        st.subheader("🔍 最新诊断结果")
         
         # 显示初步分析
         st.markdown(f"**问题分析:** {st.session_state.diagnosis_result.get('analysis', '')}")
@@ -356,10 +487,21 @@ def main():
                 st.session_state.answers[i] = st.text_input(question, key=f"q_{i}")
             
             if st.button("提交答案并继续诊断"):
+                # **保存历史记录**
+                history_entry = {
+                    "stage": "question_answers",
+                    "questions": st.session_state.current_questions,
+                    "answers": list(st.session_state.answers.values())
+                }
+                st.session_state.diagnosis_history.append(history_entry)
+
                 # 将答案添加到症状描述中
                 new_symptoms = "\n".join([f"Q: {st.session_state.current_questions[i]}\nA: {st.session_state.answers[i]}" 
                                          for i in range(len(st.session_state.current_questions))])
                 st.session_state.symptoms += "\n" + new_symptoms
+
+                # **重置当前问题，触发重新诊断**
+                #st.session_state.current_questions = []  # 清空当前问题
                 st.session_state.diagnosis_stage = "processing"
                 st.rerun()
         
